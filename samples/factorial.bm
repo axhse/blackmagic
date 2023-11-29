@@ -1,0 +1,30 @@
+* Returns 1.
+getOne x: = 1;
+
+* Returns the factorial of a number.
+factorial n:
+    n = ifElse (equals n 0) 1 n;
+    isInteger = is n #integer;
+    isValid = ifElse isInteger (less -1 n) false;
+    delegate = ifElse isValid factorial getOne;
+    = ifNoError
+        (assert isValid 'Factorial can be calculated only for non-negative integers.')
+        (multiply n (ifElse (equals n 1) getOne delegate (minus n 1)));
+
+* Test.
+testFactorial:
+    factorial0 = factorial 0;
+    factorial5 = factorial 5;
+    error = factorial -1;
+    result = join (toString factorial5) newLine;
+    result = join result (toString factorial0);
+    result = join result newLine;
+    result = join result (toString error);
+    result = join result newLine;
+    assertion1 = assert (equals 1 factorial0) '0! = 1.';
+    assertion2 = assert (equals 120 factorial5) '5! = 120.';
+    assertion3 = assert (and (is error #error) (equals (getErrorType error) 'assertion')) '(-1)! may not be calculated.';
+    result = ifNoError assertion3 result;
+    result = ifNoError assertion2 result;
+    result = ifNoError assertion1 result;
+    = result;

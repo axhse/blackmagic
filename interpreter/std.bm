@@ -1,0 +1,39 @@
+* Returns true if the value may be used as a value of a given type, otherwise false.
+is value type:
+    = equals (getType value) type;
+
+
+* Returns true if any value is true, otherwise false.
+or first second:
+    = not (and (not first) (not second));
+
+
+* Returns true if the first value is more than the second value, otherwise false.
+more first second:
+    = less second first;
+
+* Returns true if the first value is more than the second value, otherwise false.
+minus first second:
+    = sum first (multiply second -1);
+
+
+* Returns an assertion error with the given message if the condition is false, otherwise true.
+assert condition errorMessage:
+    = ifElse condition true (createError 'assertion' errorMessage);
+
+* Returns an assertion error with the given message if the condition is false, otherwise true.
+assertType value expectedType errorMessage:
+    = ifElse (is value expectedType) true (createError 'type' errorMessage);
+
+
+* Returns the second value if the first value is an error, otherwise nothing.
+ifIsError maybeError onError:
+    = ifElse (is maybeError #error) onError nothing;
+
+
+* Returns the first value if it is an error, otherwise the second value.
+ifNoError maybeError onNoError:
+    = ifElse (is maybeError #error) maybeError onNoError;
+
+* Returns a new line symbol.
+newLine: = escape 'n';

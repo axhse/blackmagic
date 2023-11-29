@@ -1,0 +1,4 @@
+# F# interpreter project.
+/interpreter/.vs
+/interpreter/bin
+/interpreter/obj
