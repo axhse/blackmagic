@@ -13,7 +13,7 @@ Thus, the result of code execution is handled directly by interpreter.
  The language has no keywords, but use a few special symbols.
  There some built-in types and functions supported.
  Each program should be a group of function declarations (though zero-parameter functions actually behave like global variables).
- Some syntax features are specified in [BUILTIN.md](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/BUILDIN.md).
+ Some syntax features are specified in [BUILTIN.md](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/BUILTIN.md).
  ### Features
 - [x] The language has variables that may be declared inside the body of any function. However, no keyword is used for specifying any declaration, even a function declaration, though some special symbols are used for this.
 - [x] The language supports recursion.
