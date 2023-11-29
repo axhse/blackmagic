@@ -134,6 +134,7 @@ false
 ''
 'Hello, world!'
 '\n\'\\'
+'this is the'' proper string'' literal as it contains only doubled quotes'
 ```
 
 #array
