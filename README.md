@@ -13,6 +13,7 @@ Thus, the result of code execution is handled directly by interpreter.
  The language has no keywords, but use a few special symbols.
  There some built-in types and functions supported.
  Each program should be a group of function declarations (though zero-parameter functions actually behave like global variables).
+ Some syntax features are specified in [BUILTIN.md](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/BUILDIN.md).
  ### Features
 - [x] The language has variables that may be declared inside the body of any function. However, no keyword is used for specifying any declaration, even a function declaration, though some special symbols are used for this.
 - [x] The language supports recursion.
@@ -22,3 +23,7 @@ Thus, the result of code execution is handled directly by interpreter.
 - [ ] IO is not supported (but may be easily added to the std function set if it will be necessary) -- right now F# tools are used to load input data and print the result.
 - [x] Arrays are supported (may store any values at the same time) with the minimal set of functions that are enough to implement other common sequence functions.
 - Some highly required functions for integers, arrays, strings, and others are implemented by F# natively. Other functions may be specified based on them (as **std**, for example).
+
+### Demo
+
+![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/success.png)
