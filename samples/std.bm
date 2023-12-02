@@ -1,25 +1,25 @@
+*** THE SIMPLEST COMMON.
+
+* Returns nothing.
+doNothing x: = nothing;
+
+* Returns the result.
+returnResult result x: = result;
+
+* Returns a new line symbol.
+newLine: = escape 'n';
+
+
+
+*** TYPE.
+
 * Returns true if the value may be used as a value of a given type, otherwise false.
 is value type:
     = equals (getType value) type;
 
 
-* Returns true if any value is true, otherwise false.
-or first second:
-    = not (and (not first) (not second));
 
-
-* Returns true if the first value is more than the second value, otherwise false.
-more first second:
-    = less second first;
-
-* Returns the negation of the number.
-negate value:
-    = multiply value -1;
-
-* Returns the difference of two numbers.
-minus first second:
-    = sum first (negate second);
-
+*** ERROR.
 
 * Returns an assertion error with the given message if the condition is false, otherwise true.
 assert condition errorMessage:
@@ -38,8 +38,91 @@ ifNoError maybeError onNoError:
     = ifElse (is maybeError #error) maybeError onNoError;
 
 
-* Returns a new line symbol.
-newLine: = escape 'n';
 
-* Returns nothing.
-doNothing x: = nothing;
+*** LOGIC.
+
+* Returns true if any value is true, otherwise false.
+or first second:
+    = not (and (not first) (not second));
+
+
+
+*** NUMBER.
+
+* Returns true if the first value is more than the second value, otherwise false.
+more first second:
+    = less second first;
+
+* Returns true if the first value is not less than the second value, otherwise false.
+notLess first second:
+    = not (less first second);
+
+* Returns true if the first value is not more than the second value, otherwise false.
+notMore first second:
+    = not (more first second);
+
+* Returns the negation of the number.
+negate value:
+    = multiply value -1;
+
+* Returns the difference of two numbers.
+minus first second:
+    = plus first (negate second);
+
+* Returns an incremented number.
+increment value:
+    = plus value 1;
+
+* Returns a decremented number.
+decrement value:
+    = minus value 1;
+
+
+
+*** ARRAY AND STRING.
+
+* Returns true if array has value at index, otherwise false.
+hasIndex sequence index:
+    = and (notMore 0 index) (less index (length sequence));
+
+
+
+*** ARRAY.
+
+** UTIL: Merge.
+stdHelperMerge result other index:
+    arrayHasIndex = hasIndex other index;
+    result = ifElse arrayHasIndex (append result (at other index)) result;
+    resultDelegate = ifElse arrayHasIndex (stdHelperMerge result other) (returnResult result);
+    = resultDelegate (increment index);
+
+* Returns an array result of two array merge.
+merge first second:
+    = stdHelperMerge first second 0;
+
+** UTIL: Slice.
+stdHelperSlice result array start end index:
+    arrayHasIndex = hasIndex array index;
+    isInRange = and (notMore start index) (less index end);
+    mayGetValue = and arrayHasIndex isInRange;
+    result = ifElse mayGetValue (append result (at array index)) result;
+    nextIndex = increment index;
+    hasNextValue = and (hasIndex array nextIndex) (less nextIndex end);
+    resultDelegate = ifElse hasNextValue (stdHelperSlice result array start end) (returnResult result);
+    = resultDelegate nextIndex;
+
+* Returns an array that contains values of given array at specified range [start; end).
+slice array start end:
+    start = ifElse (less start 0) 0 start;
+    end = ifElse (less end start) start end;
+    = stdHelperSlice empty array start end start;
+
+* Returns an array with the given value at the specified existing index.
+set array index value:
+    start = slice array 0 index;
+    end = slice array (increment index) (length array);
+    result = merge (append start value) end;
+    arrayHasIndex = hasIndex array index;
+    error = createError 'logic' 'set: The index is out of the bounds for the array.';
+    maybeError = ifElse arrayHasIndex nothing error;
+    = ifNoError maybeError result;

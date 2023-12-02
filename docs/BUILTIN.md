@@ -53,7 +53,7 @@
 ##### Integer
 
 - Returns the sum of two integer values.
-  - `sum [#integer]first [#integer]second -> #integer`
+  - `plus [#integer]first [#integer]second -> #integer`
 
 - Returns the product of two integer values.
   - `multiply [#integer]first [#integer]second) -> #integer`

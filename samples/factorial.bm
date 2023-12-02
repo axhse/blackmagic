@@ -6,13 +6,13 @@ factorial n:
     * Change n to 1 if it's 0.
     n = ifElse (equals n 0) 1 n;
     * Check if n is a valid value.
-    isValid = ifElse (is n #integer) (less -1 n) false;
+    isValid = ifElse (is n #integer) (notLess n 0) false;
     * Assert n is a valid value.
     maybeError = assert isValid 'Factorial can be calculated only for non-negative integers.';
     * Replace factorial function to a void function on error to prevent recursion.
     delegate = ifElse isValid factorial doNothing;
     * Calculate and return the result.
-    = ifNoError maybeError (multiply n (ifElse (equals n 1) getOne delegate (minus n 1)));
+    = ifNoError maybeError (multiply n (ifElse (equals n 1) getOne delegate (decrement n)));
 
 * Test.
 testFactorial:

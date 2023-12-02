@@ -89,10 +89,10 @@ let _and (first: Value) (second: Value) =
     | Value.Boolean firstValue, Value.Boolean secondValue -> Value.Boolean(firstValue && secondValue)
     | _ -> typeError "and: Both arguments must be boolean values."
 
-let _sum (first: Value) (second: Value) =
+let _plus (first: Value) (second: Value) =
     match first, second with
     | Value.Integer firstValue, Value.Integer secondValue -> Value.Integer(firstValue + secondValue)
-    | _ -> typeError "sum: Both arguments must be integer values."
+    | _ -> typeError "plus: Both arguments must be integer values."
 
 let _multiply (first: Value) (second: Value) =
     match first, second with
@@ -116,12 +116,12 @@ let _less (first: Value) (second: Value) =
 let _at (sequence: Value) (index: Value) =
     match sequence, index with
     | Value.String stringSeq, Value.Integer indexValue ->
-        if indexValue < 0 || int64 (String.length stringSeq) < indexValue then
+        if indexValue < 0 || int64 (String.length stringSeq) <= indexValue then
             typeError "at: The index is out of the bounds for the string."
         else
             Value.String(string stringSeq[0])
     | Value.Array arraySeq, Value.Integer indexValue ->
-        if indexValue < 0 || int64 (List.length arraySeq) < indexValue then
+        if indexValue < 0 || int64 (List.length arraySeq) <= indexValue then
             createError (string ErrorType.Logic) "at: The index is out of the bounds for the array."
         else
             arraySeq[int32 indexValue]
@@ -183,7 +183,7 @@ let invokeBuiltIn (name: string) (args: Value list) =
     | "equals", first :: second :: [] -> _equals first second
     | "not", value :: [] -> _not value
     | "and", first :: second :: [] -> _and first second
-    | "sum", first :: second :: [] -> _sum first second
+    | "plus", first :: second :: [] -> _plus first second
     | "multiply", first :: second :: [] -> _multiply first second
     | "floorDivide", divisible :: divisor :: [] -> _floorDivide divisible divisor
     | "less", first :: second :: [] -> _less first second

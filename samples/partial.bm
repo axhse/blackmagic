@@ -4,7 +4,7 @@ apply func n: = func n;
 
 * Returns the results produced by different partially applied functions.
 applyAll n:
-    func1 = sum 1000;
+    func1 = plus 1000;
     func2 = minus 100;
     func3 = less 0;
     result = empty;

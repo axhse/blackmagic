@@ -10,7 +10,7 @@ let BuildInFunctionNames =
       "equals"
       "not"
       "and"
-      "sum"
+      "plus"
       "multiply"
       "floorDivide"
       "less"
@@ -32,7 +32,7 @@ let rec getBuiltInFunctionParamCount name =
     | "equals" -> 2
     | "not" -> 1
     | "and" -> 2
-    | "sum" -> 2
+    | "plus" -> 2
     | "multiply" -> 2
     | "floorDivide" -> 2
     | "less" -> 2
