@@ -1,0 +1,41 @@
+* Returns the rule for state and value if it exists, otherwise nothing.
+getRule state value rules currentIndex:
+    rulesHaveIndex = hasIndex rules currentIndex;
+    rule = at rules currentIndex;
+    ruleState = at rule 0;
+    ruleValue = at rule 1;
+    isRelevantRule = and (equals state ruleState) (equals value ruleValue);
+    isRelevantRule = ifElse rulesHaveIndex isRelevantRule false;
+    isEnd = or isRelevantRule (not rulesHaveIndex);
+    result = ifElse isRelevantRule rule nothing;
+    resultDelegate = ifElse isEnd (returnResult result) (getRule state value rules);
+    = resultDelegate (increment currentIndex);
+
+* Runs turing machine with given initial state, position, memory and rules.
+runTuringMachine state position memory rules:
+    hasCellAtPosition = less position (length memory);
+    memory = ifElse hasCellAtPosition memory (append memory nothing);
+    currentValue = at memory position;
+    rule = getRule state currentValue rules 0;
+    newState = at rule 2;
+    newValue = at rule 3;
+    shift = at rule 4;
+    newPosition = plus position shift;
+    newMemory = set memory position newValue;
+    isFinalState = equals state 0;
+    resultDelegate = ifElse isFinalState
+                    (returnResult memory)
+                    (runTuringMachine newState newPosition newMemory);
+
+    * Make sure the rule for current situation exists.
+    noRuleErrorMessage = 'No rule found for state=';
+    noRuleErrorMessage = join noRuleErrorMessage (toString state);
+    noRuleErrorMessage = join noRuleErrorMessage ' and value=';
+    noRuleErrorMessage = join noRuleErrorMessage (toString currentValue);
+    noRuleErrorMessage = join noRuleErrorMessage ' at memory postion=';
+    noRuleErrorMessage = join noRuleErrorMessage (toString position);
+    noRuleError = createError 'logic' noRuleErrorMessage;
+    hasRule = or isFinalState (not (is rule #nothing));
+    resultDelegate = ifElse hasRule resultDelegate (returnResult noRuleError);
+
+    = resultDelegate rules;

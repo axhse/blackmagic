@@ -107,8 +107,22 @@ Keeps some common functions.
 - `materializeMagic` - returns an array containing values of different types.
 4. [partial.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/partial.bm)
 - `applyAll n` - applies 3 partially applied functions to n and returns the results as an array.
+5. [turingMachine.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/turingMachine.bm)
+- `runTuringMachine state position memory rules` - runs Turing machine with specified initial state, position, memory, and with giving rules.
+The machine works with following rules:  
+- If current state is **0** (used as final state) it returns current state of memory.  
+- Else, it tries to find a rule related with current state and value at position.  
+- If the rule exists, it applies it and goes to next iteration, otherwise returns an error about non-existent rule.  
+**Some restrictions:**  
+- Current state and values of memory may be presented with any values, so the user may choose the format of them.  
+- The memory is hypothetical infinite to the right (it's represented by an array).  
+- New cells become filled with `nothing`  
+- Rules should be an array of arrays with format **[caseState; caseValue; newState; newValue; shift]**.  
+- Shift here must be the value of **-1**, **0** or **1** and represent a memory index offset from current to new position (be careful with **-1**).  
+`args_runTuringMachine` of ***ArgExamples.fs*** describes a simple program for Turing machine that swaps **99** to **1000** right from the start until it meets **'#'** twice.  
 
 ### Demo
 ![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/success.png)
 ![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/compilation%20error.png)
 ![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/runtime%20error.png)
+![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/Turing%20machine.png)

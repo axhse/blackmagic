@@ -20,7 +20,41 @@ let args_slice =
       Value.Integer 3 ]
 
 // Args for `set` function of std.bm.
-let args_set =
-    [ Value.Array [ Value.Integer 0; Value.Integer 1; Value.Integer 2; Value.Integer 3 ]
-      Value.Integer 1
-      Value.Integer 88 ]
+let args_runTuringMachine =
+    [ Value.Integer 2
+      Value.Integer 0
+      Value.Array
+          [ Value.Integer 99
+            Value.Integer 99
+            Value.String "#"
+            Value.Integer 99
+            Value.Integer 99
+            Value.Integer 99
+            Value.String "#"
+            Value.Integer 99
+            Value.String "#" ]
+      Value.Array
+          [ Value.Array
+                [ Value.Integer 2
+                  Value.Integer 99
+                  Value.Integer 2
+                  Value.Integer 1000
+                  Value.Integer 1 ]
+            Value.Array
+                [ Value.Integer 1
+                  Value.Integer 99
+                  Value.Integer 1
+                  Value.Integer 1000
+                  Value.Integer 1 ]
+            Value.Array
+                [ Value.Integer 2
+                  Value.String "#"
+                  Value.Integer 1
+                  Value.String "#"
+                  Value.Integer 1 ]
+            Value.Array
+                [ Value.Integer 1
+                  Value.String "#"
+                  Value.Integer 0
+                  Value.String "#"
+                  Value.Integer 1 ] ] ]
