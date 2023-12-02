@@ -1,17 +1,24 @@
 ### About
 **BlackMagic** is a functional language developed specially for a secret big international IT company for unknown reasons.  
-It has dynamic typing (definitely inspired by Python v2💙 and JS💜).  
+It has dynamic typing (inspired by Python v2💙 and JS💜, apparently).  
 It may be interpreted with the developed F# interpreter.  
 The results of parsing and execution print to the console.  
 **BlackMagic** is an extremely pure language, besides, it has no even IO functions (though they may be easily implemented via some simple F# functions).  
 Thus, the result of code execution is handled directly by the interpreter.  
- **BlackMagic** may not exist actually beside F# infrastructure, but at the same time, it may be quite easily integrated into other F# code.  
- ### Quick Start
- Clone the project and open ***/interpreter*** folder as F# project (VS is recommended).  
- If the working directory is properly configured, then the **std** and factorial program sources will be read by relative paths from their files and then interpreted. You will see the result and the colored syntax on the console output.  
- Otherwise, you should manually adjust source file paths on the ***Program.fs*** file.
+**BlackMagic** may not exist actually beside F# infrastructure, but at the same time, it may be quite easily integrated into other F# code.  
+
+### Quick Start
+Clone the project and open ***/interpreter*** folder as F# project (VS is recommended).  
+If the working directory is properly configured, then the **std** and factorial program sources will be read by relative paths from their files and then interpreted. You will see the result and the colored syntax on the console output.  
+Otherwise, you should manually adjust source file paths on the ***Program.fs*** file.
+
+You may also use ***Program.fs*** to run other **BlackMagic** functions.  
+In general, it is important to do 3 things to run a desired **BlackMagic** code:
+1. Load source code text from files or manually write the text (`stdText`, `programText`)
+2. Specify the name of the function to be executed (`functionName`)
+3. List all args to be passed to this function (`functionArgs`) - only args of the **BlackMagic**'s type `Value` are allowed here
  
- ### Features
+### Features
 - [x] The language has variables that may be declared inside the body of any function. However, no keyword is used for specifying any declaration, even a function declaration, though some special symbols are used for this.
 - [x] The language supports recursion.
 - [ ] Lazy evaluation is not supported, so the `ifElse` of **std** function always calculates all its arguments. In this case, it's recommended to pass partially applied functions as `onTrue` and `onFalse` parameters.
@@ -21,7 +28,7 @@ Thus, the result of code execution is handled directly by the interpreter.
 - [x] Arrays are supported (may store any values at the same time) with the minimal set of functions that are enough to implement other common sequence functions.
 - Some strong need functions for integers, arrays, strings, and others are implemented by F# natively. Other useful functions may be specified based on them (as some actually are in **std**, for example).
 
- ### Syntax
+### Syntax
 The language has no keywords, but use a few special symbols.  
 There are some **built-in** types and functions supported.  
 Each program should be a group of function declarations (though zero-parameter functions actually behave like global variables).  
@@ -32,8 +39,12 @@ All statements should have a single expression on their right sides ended by an 
 To make an expression, it's possible to access actually known variable or function names, to use literal or parenthesis.  
 Comments are supported.  
 Single quotes are used for specifying string literal start and end.  Doubled single quote in the string literal is considered as one plain single quote symbol.  
-Some syntax features are specified in [BUILTIN.md](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/BUILTIN.md).  
- 
+
+#### Contribution To Society
+**BlackMagic** enforces some good code style practices:
+1. Do not use tabulation - **'\t'** is just not supported by **BlackMagic**
+2. Prefer fascinating **camelCase** to ugly *snake_case* - **'_'** is not allowed too. According to the latest medical researches, *camel_case* is probably the main cause of eye problems among all software developers.
+
 ### Interpreter
 There are several steps from accepting text code to executing the program:
 1. The interpreter accepts raw text code (that may be specified manually or loaded from any file).  
@@ -58,12 +69,23 @@ The language has its own typing system, although it may be quite easily converte
 **std.bm** is just a common source file that is not printed by the interpreter.  
 Though, it's ok to merge the text of multiple source files to parse it all together.  
 
- #### Some Tricky Errors
- ##### Parsing
- 1. If you forget to end an expression with **`;`** (or double this symbol for some reason), the parser will consider the following code as a new statement and thus may fail. - Make sure the last expression has an end symbol.
- ##### Runtime
- 1. If your code is logically incorrect (like `sum 1 2 3`, for example), the interpreter may fail on runtime with a related error. - Make sure you apply the functions properly.
- 2. In addition, some function may produce an error and then this error will be passed to the next functions, what will probably lead to creating a brand-new error. - Make sure your code has no source of unexpected errors.
+**built-in** functions are described in [BUILTIN.md](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/BUILTIN.md).  
+
+#### Some Tricky Errors
+##### Parsing
+1. If you forget to end an expression with **`;`** (or double this symbol for some reason), the parser will consider the following code as a new statement and thus may fail. - Make sure the last expression has an end symbol.
+##### Runtime
+1. If your code is logically incorrect (like `sum 1 2 3`, for example), the interpreter may fail on runtime with a related error. - Make sure you apply the functions properly.
+2. In addition, some function may produce an error and then this error will be passed to the next functions, what will probably lead to creating a brand-new error. - Make sure your code has no source of unexpected errors.
+
+### Samples
+1. ***std.bm***  
+Keeps some common functions.
+2. ***factorial.bm***
+- `factorial n` - calculates the factorial of n.
+- `testFactorial` - tests if `factorial` works properly.
+3. ***magic.bm***
+- `materializeMagic` - returns an array containing values of different types.
 
 ### Demo
 ![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/success.png)
