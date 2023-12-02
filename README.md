@@ -81,11 +81,13 @@ Though, it's ok to merge the text of multiple source files to parse it all toget
 ### Samples
 1. [std.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/std.bm)  
 Keeps some common functions.
-2. [factorial.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/factorial.bm)  
+2. [factorial.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/factorial.bm)
 - `factorial n` - calculates the factorial of n.
 - `testFactorial` - tests if `factorial` works properly.
-3. [magic.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/magic.bm)  
+3. [magic.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/magic.bm)
 - `materializeMagic` - returns an array containing values of different types.
+4. [partial.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/partial.bm)
+- `applyAll n` - applies 3 partially applied functions to n and returns the results as an array.
 
 ### Demo
 ![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/success.png)
