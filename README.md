@@ -79,13 +79,15 @@ Though, it's ok to merge the text of multiple source files to parse it all toget
 2. In addition, some function may produce an error and then this error will be passed to the next functions, what will probably lead to creating a brand-new error. - Make sure your code has no source of unexpected errors.
 
 ### Samples
-1. ***std.bm***  
+1. [std.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/std.bm)  
 Keeps some common functions.
-2. ***factorial.bm***
+2. [factorial.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/factorial.bm)  
 - `factorial n` - calculates the factorial of n.
 - `testFactorial` - tests if `factorial` works properly.
-3. ***magic.bm***
+3. [magic.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/magic.bm)  
 - `materializeMagic` - returns an array containing values of different types.
 
 ### Demo
 ![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/success.png)
+![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/compilation%20error.png)
+![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/runtime%20error.png)
