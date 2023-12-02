@@ -1,34 +1,37 @@
 ﻿module Compiler
+
 open Spec
 open BuiltIn
 
 let dropMeaninglessLexemes syntax =
-    let rec drop result restSyntax = 
+    let rec drop result restSyntax =
         match restSyntax with
         | [] -> result
-        | (Lexeme.Spacing _)::rest -> drop result rest
-        | (Lexeme.Comment _)::rest -> drop result rest
-        | (Lexeme.InvalidName _)::_ -> failwith "Unexpected lexeme."
-        | (Lexeme.SyntaxError _)::_ -> failwith "Unexpected lexeme."
-        | (Lexeme.UnparsedCode _)::_ -> failwith "Unexpected lexeme."
-        | current::rest -> drop (result @ [current]) rest
+        | (Lexeme.Spacing _) :: rest -> drop result rest
+        | (Lexeme.Comment _) :: rest -> drop result rest
+        | (Lexeme.InvalidName _) :: _ -> failwith "Unexpected lexeme."
+        | (Lexeme.SyntaxError _) :: _ -> failwith "Unexpected lexeme."
+        | (Lexeme.UnparsedCode _) :: _ -> failwith "Unexpected lexeme."
+        | current :: rest -> drop (result @ [ current ]) rest
+
     drop [] syntax
 
-let compile syntax = 
+let compile syntax =
     let processExpressionItems items =
         match items with
-        | (Access name)::[] -> Access name
-        | (LiteralValue value)::[] -> LiteralValue value
-        | item::[] -> item
+        | (Access name) :: [] -> Access name
+        | (LiteralValue value) :: [] -> LiteralValue value
+        | item :: [] -> item
         | _ -> Composition items
 
     let stringLiteralToValue literalValue =
         let rec dropQuotes result lastSymbols =
             match lastSymbols with
-            | _::[] -> result
-            | _::second::rest when result = "" -> dropQuotes (string second) rest
-            | current::rest -> dropQuotes (result + string current) rest
+            | _ :: [] -> result
+            | _ :: second :: rest when result = "" -> dropQuotes (string second) rest
+            | current :: rest -> dropQuotes (result + string current) rest
             | [] -> failwith "Unexpected state."
+
         dropQuotes "" (Seq.toList literalValue)
 
     let literalToValue literal =
@@ -37,65 +40,80 @@ let compile syntax =
         | Literal.EmptyArray -> Value.Array []
         | Literal.Boolean value -> Value.Boolean value
         | Literal.Integer value -> Value.Integer value
-        | Literal.String value -> Value.String (stringLiteralToValue value)
+        | Literal.String value -> Value.String(stringLiteralToValue value)
         | Literal.Type value -> Value.Type value
 
     let rec compileNextDeclaration result restSyntax knownFunctions =
         match restSyntax with
         | [] -> result
-        | (Lexeme.FunctionDeclaration name)::rest ->
+        | (Lexeme.FunctionDeclaration name) :: rest ->
             let paramNames, restFunctionTokens = compileDeclarationTitle [] rest
             let body, restBodyTokens = compileBody [] restFunctionTokens
-            let knownFunctions = knownFunctions @ [name]
-            let declaration = {Name = name; ParamNames = paramNames; Body = body; KnownFunctions = knownFunctions}
-            compileNextDeclaration (result @ [declaration]) restBodyTokens knownFunctions
+            let knownFunctions = knownFunctions @ [ name ]
+
+            let declaration =
+                { Name = name
+                  ParamNames = paramNames
+                  Body = body
+                  KnownFunctions = knownFunctions }
+
+            compileNextDeclaration (result @ [ declaration ]) restBodyTokens knownFunctions
         | _ -> failwith "Unexpected lexeme."
+
     and compileDeclarationTitle paramNames restSyntax =
         match restSyntax with
-        | (Lexeme.SpecialSymbol ':')::rest -> paramNames, rest
-        | (Lexeme.FunctionParam name)::rest -> compileDeclarationTitle (paramNames @ [name]) rest
+        | (Lexeme.SpecialSymbol ':') :: rest -> paramNames, rest
+        | (Lexeme.FunctionParam name) :: rest -> compileDeclarationTitle (paramNames @ [ name ]) rest
         | _ -> failwith "Unexpected lexeme."
+
     and compileBody result restSyntax =
         match restSyntax with
-        | (Lexeme.SpecialSymbol '=')::rest ->
+        | (Lexeme.SpecialSymbol '=') :: rest ->
             let expression, expressionRest = compileExpressionStart rest
-            let returnStatement = Return { Value = expression}
-            result @ [returnStatement],  expressionRest
-        | (Lexeme.Assignment name)::rest ->
+            let returnStatement = Return { Value = expression }
+            result @ [ returnStatement ], expressionRest
+        | (Lexeme.Assignment name) :: rest ->
             let expression, expressionRest = compileAssignmentStart rest
             let assignment = Assignment { Name = name; Value = expression }
-            compileBody (result @ [assignment]) expressionRest
+            compileBody (result @ [ assignment ]) expressionRest
         | _ -> failwith "Unexpected lexeme."
+
     and compileAssignmentStart restSyntax =
         match restSyntax with
-        | (Lexeme.SpecialSymbol '=')::rest -> compileExpressionStart rest
+        | (Lexeme.SpecialSymbol '=') :: rest -> compileExpressionStart rest
         | _ -> failwith "Unexpected lexeme."
+
     and compileExpressionStart restSyntax =
         match restSyntax with
-        | (Lexeme.SpecialSymbol '(')::_ -> compileAndProcessItems restSyntax
-        | (Lexeme.Literal _)::_ -> compileAndProcessItems restSyntax
-        | (Lexeme.FunctionAccess _)::_ -> compileAndProcessItems restSyntax
-        | (Lexeme.VariableAccess _)::_ -> compileAndProcessItems restSyntax
+        | (Lexeme.SpecialSymbol '(') :: _ -> compileAndProcessItems restSyntax
+        | (Lexeme.Literal _) :: _ -> compileAndProcessItems restSyntax
+        | (Lexeme.FunctionAccess _) :: _ -> compileAndProcessItems restSyntax
+        | (Lexeme.VariableAccess _) :: _ -> compileAndProcessItems restSyntax
         | _ -> failwith "Unexpected lexeme."
+
     and compileAndProcessItems restSyntax =
         let items, itemsRest = compileExpressionItems [] restSyntax
         processExpressionItems items, itemsRest
+
     and compileExpressionItems (result: Expression list) restSyntax =
         match restSyntax with
-        | (Lexeme.SpecialSymbol ';')::rest -> result, rest
-        | (Lexeme.SpecialSymbol ')')::_ -> result, restSyntax
-        | (Lexeme.SpecialSymbol '(')::rest ->
+        | (Lexeme.SpecialSymbol ';') :: rest -> result, rest
+        | (Lexeme.SpecialSymbol ')') :: _ -> result, restSyntax
+        | (Lexeme.SpecialSymbol '(') :: rest ->
             let expression, expressionRest = compileContainerContent rest
             let container = Container expression
-            compileExpressionItems (result @ [container]) expressionRest
-        | (Lexeme.Literal literal)::rest -> compileExpressionItems (result @ [LiteralValue (literalToValue literal)]) rest
-        | (Lexeme.FunctionAccess name)::rest -> compileExpressionItems (result @ [Access name]) rest
-        | (Lexeme.VariableAccess name)::rest -> compileExpressionItems (result @ [Access name]) rest
+            compileExpressionItems (result @ [ container ]) expressionRest
+        | (Lexeme.Literal literal) :: rest ->
+            compileExpressionItems (result @ [ LiteralValue(literalToValue literal) ]) rest
+        | (Lexeme.FunctionAccess name) :: rest -> compileExpressionItems (result @ [ Access name ]) rest
+        | (Lexeme.VariableAccess name) :: rest -> compileExpressionItems (result @ [ Access name ]) rest
         | _ -> failwith "Unexpected lexeme."
+
     and compileContainerContent restSyntax =
         let (expression: Expression), expressionRest = compileExpressionStart restSyntax
+
         match expressionRest with
-        | (Lexeme.SpecialSymbol ')')::rest -> expression, rest
+        | (Lexeme.SpecialSymbol ')') :: rest -> expression, rest
         | _ -> failwith "Unexpected lexeme."
 
     compileNextDeclaration [] (dropMeaninglessLexemes syntax) BuildInFunctionNames

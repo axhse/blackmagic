@@ -29,20 +29,20 @@ type SyntaxError =
     | MissingParenthesis
     | EmptyParethesisBlock
 
-// Language special symbols.    
+// Language special symbols.
 type SpecialSymbol =
     | OpenParenthesis = '('
     | CloseParenthesis = ')'
     | Colon = ':'
     | Semicolon = ';'
     | Equals = '='
-    
+
 // Language spacing symbols.
 type Spacing =
     | Space = ' '
     | NewLine = '\n'
 
-// Language tokens.    
+// Language tokens.
 type Token =
     | SpecialSymbol of char
     | Spacing of char
@@ -96,7 +96,12 @@ type Value =
     | Array of Value list
     | Error of Error
     | Function of Function
-and Function = { Name: string; Args: Value list; ParamCount: int }
+
+and Function =
+    { Name: string
+      Args: Value list
+      ParamCount: int }
+
 and Error = { Type: string; Message: string }
 
 // Runtime expressions.
@@ -109,14 +114,18 @@ type Expression =
 
 // Runtime code components.
 
-and Assignment = {Name: string; Value: Expression}
+and Assignment = { Name: string; Value: Expression }
 and Return = { Value: Expression }
 
 type BodyBlock =
     | Assignment of Assignment
     | Return of Return
 
-type Declaration = {Name: string; ParamNames: string list; Body: BodyBlock list; KnownFunctions: string list}
+type Declaration =
+    { Name: string
+      ParamNames: string list
+      Body: BodyBlock list
+      KnownFunctions: string list }
 
 type Code = Declaration list
 

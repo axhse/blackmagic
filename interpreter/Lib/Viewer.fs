@@ -1,4 +1,5 @@
 ﻿module Viewer
+
 open Spec
 
 type TextStyle =
@@ -62,25 +63,26 @@ let getStyleCode (style: TextStyle) =
     | TextStyle.Cyan -> 96
     | TextStyle.White -> 97
     | _ -> 0
-    
+
 let rec withStyles text styles =
     match styles with
     | [] -> text + "\x1B[0m"
-    | style::otherStyles -> withStyles ("\x1B[" + string (getStyleCode style) + "m" + text) otherStyles
+    | style :: otherStyles -> withStyles ("\x1B[" + string (getStyleCode style) + "m" + text) otherStyles
 
-let withStyle text style = "\x1B[" + string (getStyleCode style) + "m" + text + "\x1B[0m"
+let withStyle text style =
+    "\x1B[" + string (getStyleCode style) + "m" + text + "\x1B[0m"
 
 
-let literalToString literal = 
+let literalToString literal =
     match literal with
     | Literal.Nothing -> "nothing"
     | Literal.EmptyArray -> "empty"
-    | Literal.Boolean value -> if value then "true" else "false" 
+    | Literal.Boolean value -> if value then "true" else "false"
     | Literal.Integer value -> string value
     | Literal.String value -> value
     | Literal.Type value -> value
 
-let lexemeToString lexeme = 
+let lexemeToString lexeme =
     match lexeme with
     | Lexeme.SpecialSymbol symbol -> string symbol
     | Lexeme.Spacing symbol -> string symbol
@@ -96,28 +98,32 @@ let lexemeToString lexeme =
     | Lexeme.InvalidName name -> name
 
 let getSyntaxView syntax =
-    let getColoredLexeme lexeme = 
+    let getColoredLexeme lexeme =
         match lexeme with
-            | Lexeme.SpecialSymbol ';' -> withStyle ";" TextStyle.Yellow
-            | Lexeme.SpecialSymbol symbol -> withStyle (string symbol) TextStyle.DarkYellow
-            | Lexeme.Spacing symbol -> string symbol
-            | Lexeme.Comment comment -> withStyles comment [TextStyle.DarkGray; TextStyle.Italic]
-            | Lexeme.Literal (Literal.String literal) -> withStyles literal [TextStyle.DarkGreen; TextStyle.Italic]
-            | Lexeme.Literal literal -> withStyle (literalToString literal) TextStyle.Green
-            | Lexeme.FunctionDeclaration name -> withStyles name [TextStyle.Purple; TextStyle.Bold]
-            | Lexeme.FunctionParam name -> withStyle name TextStyle.DarkCyan
-            | Lexeme.Assignment name -> withStyle name TextStyle.Cyan
-            | Lexeme.FunctionAccess name -> withStyle name TextStyle.DarkBlue
-            | Lexeme.VariableAccess name -> withStyle name TextStyle.Blue
-            | Lexeme.SyntaxError _ -> ""
-            | Lexeme.UnparsedCode text -> withStyle text TextStyle.DarkGray
-            | Lexeme.InvalidName name -> name
+        | Lexeme.SpecialSymbol ';' -> withStyle ";" TextStyle.Yellow
+        | Lexeme.SpecialSymbol symbol -> withStyle (string symbol) TextStyle.DarkYellow
+        | Lexeme.Spacing symbol -> string symbol
+        | Lexeme.Comment comment -> withStyles comment [ TextStyle.DarkGray; TextStyle.Italic ]
+        | Lexeme.Literal(Literal.String literal) -> withStyles literal [ TextStyle.DarkGreen; TextStyle.Italic ]
+        | Lexeme.Literal literal -> withStyle (literalToString literal) TextStyle.Green
+        | Lexeme.FunctionDeclaration name -> withStyles name [ TextStyle.Purple; TextStyle.Bold ]
+        | Lexeme.FunctionParam name -> withStyle name TextStyle.DarkCyan
+        | Lexeme.Assignment name -> withStyle name TextStyle.Cyan
+        | Lexeme.FunctionAccess name -> withStyle name TextStyle.DarkBlue
+        | Lexeme.VariableAccess name -> withStyle name TextStyle.Blue
+        | Lexeme.SyntaxError _ -> ""
+        | Lexeme.UnparsedCode text -> withStyle text TextStyle.DarkGray
+        | Lexeme.InvalidName name -> name
 
-    let rec parse result restSyntax = 
-        match restSyntax  with
+    let rec parse result restSyntax =
+        match restSyntax with
         | [] -> result
-        | current::(SyntaxError _)::rest -> parse (result + withStyles (lexemeToString current) [TextStyle.RedBackground; TextStyle.Black]) rest
-        | current::rest -> parse (result + getColoredLexeme current) rest
+        | current :: (SyntaxError _) :: rest ->
+            parse
+                (result
+                 + withStyles (lexemeToString current) [ TextStyle.RedBackground; TextStyle.Black ])
+                rest
+        | current :: rest -> parse (result + getColoredLexeme current) rest
 
     parse "" syntax
 
@@ -139,18 +145,25 @@ let getErrorMessage error =
     | SyntaxError.ExpressionHasNoEnd -> "The expression has no end."
     | SyntaxError.MissingParenthesis -> "Missing parenthesis."
     | SyntaxError.EmptyParethesisBlock -> "Parenthesis block is empty."
-    
+
 let getErrorMessages syntax =
     let rec getMessages result restSyntax =
         match restSyntax with
         | [] -> result
-        | (SyntaxError error)::rest -> getMessages (result @ [getErrorMessage error]) rest
-        | _::rest -> getMessages result rest
+        | (SyntaxError error) :: rest -> getMessages (result @ [ getErrorMessage error ]) rest
+        | _ :: rest -> getMessages result rest
+
     getMessages [] syntax
 
 let printSyntaxWithErrors syntax =
     let errorMessages = getErrorMessages syntax
-    List.iter (fun message -> printf "%s\n" (withStyles message [TextStyle.Red; TextStyle.Bold])) errorMessages
+    List.iter (fun message -> printf "%s\n" (withStyles message [ TextStyle.Red; TextStyle.Bold ])) errorMessages
     let syntaxView = getSyntaxView syntax
-    let syntaxView = if List.length errorMessages = 0 then syntaxView else "\n" + syntaxView
+
+    let syntaxView =
+        if List.length errorMessages = 0 then
+            syntaxView
+        else
+            "\n" + syntaxView
+
     printf "%s" syntaxView

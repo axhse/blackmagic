@@ -1,29 +1,29 @@
 ﻿module BuiltIn
+
 open System
 
-type DeclarationMeta = { Name: string; ParamCount: int; }
+type DeclarationMeta = { Name: string; ParamCount: int }
 
-let BuildInFunctionNames = [
-    "ifElse"
-    "getType"
-    "equals"
-    "not"
-    "and"
-    "sum"
-    "multiply"
-    "floorDivide"
-    "less"
-    "at"
-    "length"
-    "toString"
-    "join"
-    "escape"
-    "append"
-    "dropTail"
-    "createError"
-    "getErrorType"
-    "getErrorMessage"
-]
+let BuildInFunctionNames =
+    [ "ifElse"
+      "getType"
+      "equals"
+      "not"
+      "and"
+      "sum"
+      "multiply"
+      "floorDivide"
+      "less"
+      "at"
+      "length"
+      "toString"
+      "join"
+      "escape"
+      "append"
+      "dropTail"
+      "createError"
+      "getErrorType"
+      "getErrorMessage" ]
 
 let rec getBuiltInFunctionParamCount name =
     match name with
@@ -48,7 +48,16 @@ let rec getBuiltInFunctionParamCount name =
     | "getErrorMessage" -> 1
     | _ -> failwith "Unknown built-in function name."
 
-let TypeLiterals = [ "#type"; "#nothing"; "#boolean"; "#integer"; "#string"; "#array"; "#function"; "#error" ]
+let TypeLiterals =
+    [ "#type"
+      "#nothing"
+      "#boolean"
+      "#integer"
+      "#string"
+      "#array"
+      "#function"
+      "#error" ]
+
 let ForbiddenNames = [ "true"; "false"; "nothing"; "empty" ]
 
 let Letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
@@ -63,19 +72,25 @@ let isBuiltInFunction name = List.contains name BuildInFunctionNames
 let isValidName name =
     let areValidSymbols name =
         match Seq.toList name with
-        | first::other -> String.exists (fun x -> x = first) Letters && not (List.exists (fun x -> not (String.exists (fun y -> x = y) LettersWithNumbers)) other)
+        | first :: other ->
+            String.exists (fun x -> x = first) Letters
+            && not (List.exists (fun x -> not (String.exists (fun y -> x = y) LettersWithNumbers)) other)
         | _ -> false
-    if List.contains name ForbiddenNames
-        then false
-        else String.length name <= 100 && areValidSymbols name
 
-let isPureIntegerLiteral chars = List.length chars <= 15 && not (List.exists (fun x -> not (String.exists (fun y -> x = y) Numbers)) chars)
+    if List.contains name ForbiddenNames then
+        false
+    else
+        String.length name <= 100 && areValidSymbols name
+
+let isPureIntegerLiteral chars =
+    List.length chars <= 15
+    && not (List.exists (fun x -> not (String.exists (fun y -> x = y) Numbers)) chars)
 
 let isIntegerLiteral string =
     match Seq.toList string with
     | [] -> false
-    | '-'::other -> isPureIntegerLiteral other
-    | '+'::other -> isPureIntegerLiteral other
+    | '-' :: other -> isPureIntegerLiteral other
+    | '+' :: other -> isPureIntegerLiteral other
     | other -> isPureIntegerLiteral other
 
 let parseInteger string = Int64.Parse string
