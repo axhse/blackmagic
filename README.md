@@ -82,6 +82,21 @@ Thus, large calculations can not be performed with **BlackMagic** yet.
 1. If your code is logically incorrect (like `plus 1 2 3`, for example), the interpreter may fail on runtime with a related error. - Make sure you apply the functions properly.
 2. In addition, some function may produce an error and then this error will be passed to the next functions, what will probably lead to creating a brand-new error. - Make sure your code has no source of unexpected errors.
 
+#### Components
+- Main
+1. [FileReader.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/FileReader.fs) - keeps functions to read code text from files.
+2. [ArgExamples.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/ArgExamples.fs) - keeps some arg examples for **BlackMagic** functions.
+3. [Program.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Program.fs) - the main file to be run.  
+- Lib  
+4. [Lib/Spec.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/Spec.fs) - specifies key language-related types.
+5. [Lib/SpecTools.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/SpecTools.fs) -implements some tools over `Spec` types.
+6. [Lib/BuiltIn.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/BuiltIn.fs) - describes built-in features.
+7. [Lib/BuiltInFunctions.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/BuiltInFunctions.fs) - implements built-in functions.
+8. [Lib/Parser.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/Parser.fs) - implements token and syntax parser.
+9. [Lib/Compiler.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/Compiler.fs) - implements code compiler.
+10. [Lib/Executor.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/Executor.fs) - implements code executor.
+11. [Lib/Interpreter.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/Interpreter.fs) - implements console interpreter.
+
 ### Samples
 1. [std.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/std.bm)  
 Keeps some common functions.
