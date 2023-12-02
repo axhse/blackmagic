@@ -53,8 +53,8 @@ let rec apply (value: Value) arg code invocationDepth =
         RuntimeError(
             sprintf
                 "`%s` may not be applied to `%s`. Make sure you applicate functions in the proper order."
-                (toRegularString arg)
                 (toRegularString value)
+                (toRegularString arg)
         )
 
 and evaluateFunction func code invocationDepth =

@@ -69,6 +69,10 @@ The language has its own typing system, although it may be quite easily converte
 **std.bm** is just a common source file that is not printed by the interpreter.  
 Though, it's ok to merge the text of multiple source files to parse it all together.  
 
+Although the language strongly relies on recursive calculations, it really struggles from inefficient memory usage.  
+(While F# probably optimizes recursion a lot).  
+Thus, large calculations can not be performed with **BlackMagic** yet.  
+
 **built-in** functions are described in [BUILTIN.md](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/BUILTIN.md).  
 
 #### Some Tricky Errors
