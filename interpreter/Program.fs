@@ -1,6 +1,7 @@
 ﻿open FileReader
-open Interpreter
 open Spec
+open Interpreter
+open ArgExamples
 
 // TODO: Adjust.
 

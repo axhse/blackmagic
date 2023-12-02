@@ -2,11 +2,11 @@
 
 open Spec
 open SpecTools
+open BuiltInFunctions
 open Parser
+open Viewer
 open Compiler
 open Executor
-open Viewer
-open BuiltInFunctions
 
 let runWithStd (codeText: string) (stdCodeText: string) (targetFunction: string) (args: Value list) =
     let isDeclaration lexeme =

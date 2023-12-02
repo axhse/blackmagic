@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<Compile Include="Lib\FileReader.fs" />
 	<Compile Include="Lib\Spec.fs" />
 	<Compile Include="Lib\SpecTools.fs" />
 	<Compile Include="Lib\BuiltIn.fs" />
@@ -16,6 +15,8 @@
 	<Compile Include="Lib\Compiler.fs" />
 	<Compile Include="Lib\Executor.fs" />
 	<Compile Include="Lib\Interpreter.fs" />
+	<Compile Include="FileReader.fs" />
+	<Compile Include="ArgExamples.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
