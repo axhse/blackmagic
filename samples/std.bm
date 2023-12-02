@@ -29,15 +29,17 @@ assert condition errorMessage:
 assertType value expectedType errorMessage:
     = ifElse (is value expectedType) true (createError 'type' errorMessage);
 
-
 * Returns the second value if the first value is an error, otherwise nothing.
 ifIsError maybeError onError:
     = ifElse (is maybeError #error) onError nothing;
-
 
 * Returns the first value if it is an error, otherwise the second value.
 ifNoError maybeError onNoError:
     = ifElse (is maybeError #error) maybeError onNoError;
 
+
 * Returns a new line symbol.
 newLine: = escape 'n';
+
+* Returns nothing.
+doNothing x: = nothing;

@@ -1,15 +1,14 @@
 * Returns the magic array keeping all important values that define the laws of the universe.
 materializeMagic:
     array = empty;
-    array = append array nothing; * The nothing.
-    array = append array false; * A boolean.
-    array = append array -123; * An integer.
-    array = append array 'functional superiority ''23'; * A string.
-    array = append array #integer; * A type.
-    array = append array (append (append empty 123) empty); * An array.
-    array = append array (floorDivide 1 0); * An error.
-    array = append array sum; * A function.
-    array = append array (sum 100); * A partially applied function.
-    array = append array (sum 100 22); * A fully applied function.
-
+    array = append array nothing;   * The nothing.
+    array = append array false;     * A boolean.
+    array = append array -123;      * An integer.
+    array = append array 'functional superiority ''23';      * A string.
+    array = append array #integer;                           * A type.
+    array = append array (append (append empty 123) empty);  * An array.
+    array = append array (floorDivide 1 0);                  * An error.
+    array = append array sum;           * A function.
+    array = append array (sum 100);     * A partially applied function.
+    array = append array (sum 100 22);  * A fully applied function.
     = array;
