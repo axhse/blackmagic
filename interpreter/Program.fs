@@ -4,8 +4,9 @@ open Spec
    
 // TODO: Adjust.
 
-// The text of the std code.
+// The source file folder.
 let sampleFolderPath = "../../../../samples";
+// The text of the std code.
 let stdText = (readFolderFileText sampleFolderPath "std.bm")
 // The text of the user code.
 let programText = (readFolderFileText sampleFolderPath "factorial.bm")

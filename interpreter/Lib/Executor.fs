@@ -39,7 +39,7 @@ let rec apply (value: Value) arg code invocationDepth =
             let func = { Name= func.Name; ParamCount = paramCount; Args = func.Args @ [arg]}
             if paramCount = List.length func.Args then evaluateFunction func code invocationDepth
             else Value (Value.Function func)
-    | value -> RuntimeError (sprintf "Nothing may be applied to value `%s`. Make sure you applicate functions in the proper order." (toRegularString value))
+    | value -> RuntimeError (sprintf "`%s` may not be applied to `%s`. Make sure you applicate functions in the proper order." (toRegularString arg) (toRegularString value))
 and evaluateFunction func code invocationDepth =
     if isBuiltInFunction func.Name
     then
@@ -49,7 +49,7 @@ and evaluateFunction func code invocationDepth =
     let variables = buildVariables [] declaration.ParamNames func.Args
     let invocationDepth = invocationDepth + 1
     if invocationDepth > INVOCATION_DEPTH_LIMIT
-        then RuntimeError (sprintf "Invocation depth limit reached. Make sure your recursive functions work properly.")
+        then RuntimeError (sprintf "Invocation depth limit reached. Make sure your recursive functions work right.")
         else evaluateBody declaration.Body variables invocationDepth code
 and evaluateBody restBody variables invocationDepth code =
     match restBody with

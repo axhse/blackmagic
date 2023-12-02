@@ -4,8 +4,7 @@ getOne x: = 1;
 * Returns the factorial of a number.
 factorial n:
     n = ifElse (equals n 0) 1 n;
-    isInteger = is n #integer;
-    isValid = ifElse isInteger (less -1 n) false;
+    isValid = ifElse (is n #integer) (less -1 n) false;
     delegate = ifElse isValid factorial getOne;
     = ifNoError
         (assert isValid 'Factorial can be calculated only for non-negative integers.')
