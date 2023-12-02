@@ -12,16 +12,20 @@ or first second:
 more first second:
     = less second first;
 
-* Returns true if the first value is more than the second value, otherwise false.
+* Returns the negation of the number.
+negate value:
+    = multiply value -1;
+
+* Returns the difference of two numbers.
 minus first second:
-    = sum first (multiply second -1);
+    = sum first (negate second);
 
 
 * Returns an assertion error with the given message if the condition is false, otherwise true.
 assert condition errorMessage:
     = ifElse condition true (createError 'assertion' errorMessage);
 
-* Returns an assertion error with the given message if the condition is false, otherwise true.
+* Returns a type error with the given message if the value has not expected type, otherwise true.
 assertType value expectedType errorMessage:
     = ifElse (is value expectedType) true (createError 'type' errorMessage);
 

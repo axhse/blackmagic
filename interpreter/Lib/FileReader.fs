@@ -10,3 +10,6 @@ let dropCarriageReturns text =
     drop "" (Seq.toList text)
 
 let readFileText (filePath: string) = dropCarriageReturns (File.ReadAllText(filePath))
+
+let readFolderFileText (folderPath: string) (fileName: string)
+    = readFileText (Path.Join (folderPath, fileName))

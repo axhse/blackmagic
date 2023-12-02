@@ -5,9 +5,10 @@ open Spec
 // TODO: Adjust.
 
 // The text of the std code.
-let stdText = (readFileText "../../../std.bm")
+let sampleFolderPath = "../../../../samples";
+let stdText = (readFolderFileText sampleFolderPath "std.bm")
 // The text of the user code.
-let programText = (readFileText "../../../../samples/factorial.bm")
+let programText = (readFolderFileText sampleFolderPath "factorial.bm")
 // The name of the function to be invoked.
 let functionName = "factorial"
 // The args of the function to be invoked.

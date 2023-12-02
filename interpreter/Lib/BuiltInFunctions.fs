@@ -31,6 +31,25 @@ let toRegularString (value: Value) =
         $"<function>{func.Name}{paramString}"
     (anyToString value)
 
+let rec equals (first: Value) (second: Value) =
+    match first, second with
+    | Value.Nothing, Value.Nothing -> true
+    | Value.Type firstValue, Value.Type secondValue -> firstValue = secondValue
+    | Value.Boolean firstValue, Value.Boolean secondValue -> firstValue = secondValue
+    | Value.Integer firstValue, Value.Integer secondValue -> firstValue = secondValue
+    | Value.String firstValue, Value.String secondValue -> firstValue = secondValue
+    | Value.Error firstValue, Value.Error secondValue ->
+        firstValue.Type = secondValue.Type && firstValue.Message = secondValue.Message
+    | Value.Array firstValue, Value.Array secondValue ->
+        List.length firstValue = List.length secondValue && arrayEquals firstValue secondValue
+    | _ -> false
+and arrayEquals firstRest secondRest =
+    match firstRest, secondRest with
+    | [], [] -> true
+    | firstStart::firstOther, secondStart::secondOther ->
+        equals firstStart secondStart && arrayEquals firstOther secondOther
+    | _ -> false
+
 let _ifElse (condition: Value) (onTrue: Value) (onFalse: Value) =
     match condition with
     | Value.Boolean boolean -> if boolean then onTrue else onFalse
@@ -47,14 +66,7 @@ let _getType (value: Value) =
     | Value.Function _ -> Value.Type "#function"
     | Value.Error _ -> Value.Type "#error"
 
-let _equals (first: Value) (second: Value) =
-    match first, second with
-    | Value.Nothing, Value.Nothing -> Value.Boolean true
-    | Value.Type firstValue, Value.Type secondValue -> Value.Boolean (firstValue = secondValue)
-    | Value.Boolean firstValue, Value.Boolean secondValue -> Value.Boolean (firstValue = secondValue)
-    | Value.Integer firstValue, Value.Integer secondValue -> Value.Boolean (firstValue = secondValue)
-    | Value.String firstValue, Value.String secondValue -> Value.Boolean (firstValue = secondValue)
-    | _ -> Value.Boolean false
+let _equals (first: Value) (second: Value) = Value.Boolean (equals first second)
 
 let _not (value: Value) =
     match value with
