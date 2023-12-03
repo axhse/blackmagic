@@ -14,9 +14,9 @@ Otherwise, you should manually adjust source file paths on the ***Program.fs*** 
 
 You may also use ***Program.fs*** to run other **BlackMagic** functions.  
 In general, it is important to do 3 things to run a desired **BlackMagic** code:
-1. Load source code text from files or manually write the text (`stdText`, `programText`)
-2. Specify the name of the function to be executed (`functionName`)
-3. List all args to be passed to this function (`functionArgs`) - only args of the **BlackMagic**'s type `Value` are allowed here
+1. Load source code text from files or manually write the text (`stdText`, `programText`).
+2. Specify the name of the function to be executed (`functionName`).
+3. List all args to be passed to this function (`functionArgs`) - only args of the **BlackMagic**'s type `Value` are allowed here.
  
 ### Features
 - [x] The language has variables that may be declared inside the body of any function. However, no keyword is used for specifying any declaration, even a function declaration, though some special symbols are used for this.
@@ -42,7 +42,7 @@ Single quotes are used for specifying string literal start and end.  Doubled sin
 
 #### Contribution To Society
 **BlackMagic** enforces some good code style practices:
-1. Do not use tabulation - **'\t'** is just not supported by **BlackMagic**
+1. Do not use tabulation - **'\t'** is just not supported by **BlackMagic**.
 2. Prefer fascinating **camelCase** to ugly *snake_case* - **'_'** is not allowed too. According to the latest medical researches, *camel_case* is probably the main cause of eye problems among all software developers.
 
 ### Interpreter
@@ -118,7 +118,7 @@ The machine works with following rules:
 **Some restrictions:**  
 - Current state and values of memory may be presented with any values, so the user may choose the format of them.  
 - The memory is hypothetical infinite to the right (it's represented by an array).  
-- New cells become filled with `nothing`  
+- New cells become filled with `nothing`.  
 - Rules should be an array of arrays with format **[caseState; caseValue; newState; newValue; shift]**.  
 - Shift here must be the value of **-1**, **0** or **1** and represent a memory index offset from current to new position (be careful with **-1**).  
 `args_runTuringMachine` of ***ArgExamples.fs*** describes a simple program for Turing machine that swaps **99** to **1000** right from the start until it meets **'#'** twice or `nothing` once.
