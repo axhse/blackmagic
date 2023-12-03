@@ -83,4 +83,16 @@ let args_runTuringMachine =
                   Value.String "#"
                   Value.Integer 0
                   Value.String "#"
-                  Value.Integer 1 ] ] ]
+                  Value.Integer 0 ]
+            Value.Array
+                [ Value.Integer 2
+                  Value.Nothing
+                  Value.Integer 0
+                  Value.Nothing
+                  Value.Integer 0 ]
+            Value.Array
+                [ Value.Integer 1
+                  Value.Nothing
+                  Value.Integer 0
+                  Value.Nothing
+                  Value.Integer 0 ] ] ]

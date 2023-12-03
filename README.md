@@ -121,7 +121,7 @@ The machine works with following rules:
 - New cells become filled with `nothing`  
 - Rules should be an array of arrays with format **[caseState; caseValue; newState; newValue; shift]**.  
 - Shift here must be the value of **-1**, **0** or **1** and represent a memory index offset from current to new position (be careful with **-1**).  
-`args_runTuringMachine` of ***ArgExamples.fs*** describes a simple program for Turing machine that swaps **99** to **1000** right from the start until it meets **'#'** twice.  
+`args_runTuringMachine` of ***ArgExamples.fs*** describes a simple program for Turing machine that swaps **99** to **1000** right from the start until it meets **'#'** twice or `nothing` once.
 
 ### Demo
 ![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/success.png)
