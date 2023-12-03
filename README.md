@@ -21,7 +21,7 @@ In general, it is important to do 3 things to run a desired **BlackMagic** code:
 ### Features
 - [x] The language has variables that may be declared inside the body of any function. However, no keyword is used for specifying any declaration, even a function declaration, though some special symbols are used for this.
 - [x] The language supports recursion.
-- [ ] Lazy evaluation is not supported, so the `ifElse` of **std** function always calculates all its arguments. In this case, it's recommended to pass partially applied functions as `onTrue` and `onFalse` parameters.
+- [ ] Lazy evaluation is not supported.
 - [x] Functions are supported.
 - [ ] Closures are not supported.
 - [ ] IO is not supported (but may be easily added to the **built-in** function set if it will be necessary) - right now F# tools are used to load input data and print the result.
@@ -81,6 +81,8 @@ Thus, large calculations can not be performed with **BlackMagic** yet.
 ##### Runtime
 1. If your code is logically incorrect (like `plus 1 2 3`, for example), the interpreter may fail on runtime with a related error. - Make sure you apply the functions properly.
 2. In addition, some function may produce an error and then this error will be passed to the next functions, what will probably lead to creating a brand-new error. - Make sure your code has no source of unexpected errors.
+##### Conceptual
+1. As **BlackMagic** has no conditional statements and no lazy evaluation, `ifElse` of **std** always evaluates all its arguments. Thus, to achieve desired conditional behavior and prevent infinite recursion particularly, it's necessary to pass functions as `onTrue` and `onFalse` arguments, get a result function and then apply it. For this purpose, you may use `returnResult` of **std** that returns the specified result when is applied to any argument.
 
 #### Components
 - Main
