@@ -26,7 +26,7 @@ In general, it is important to do 3 things to run a desired **BlackMagic** code:
 - [ ] Closures are not supported.
 - [ ] IO is not supported (but may be easily added to the **built-in** function set if it will be necessary) - right now F# tools are used to load input data and print the result.
 - [x] Arrays are supported (may store any values at the same time) with the minimal set of functions that are enough to implement other common sequence functions.
-- [x] Some strong need functions for integers, arrays, strings, and others are implemented by F# natively. There are also some useful functions implemented in **std**, including advanced functions `merge` and `slice` for arrays.
+- [x] Some strong need functions for integers, arrays, strings, and others are implemented by F# natively. There are also some useful functions implemented in **std**, including advanced array functions `merge`, `slice`, `map` and `filter`.
 
 ### Syntax
 The language has no keywords, but use a few special symbols.  

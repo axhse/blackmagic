@@ -117,6 +117,33 @@ slice array start end:
     end = ifElse (less end start) start end;
     = stdHelperSlice empty array start end start;
 
+** UTIL: Map.
+stdHelperMap result array mapper index:
+    arrayHasIndex = hasIndex array index;
+    newValue = mapper (at array index);
+    result = ifElse arrayHasIndex (append result newValue) result;
+    resultDelegate = ifElse arrayHasIndex (stdHelperMap result array mapper) (returnResult result);
+    = resultDelegate (increment index);
+
+* Applies mapper function to all array values and returns an array of new values.
+map array mapper:
+    = stdHelperMap empty array mapper 0;
+
+** UTIL: Filter.
+stdHelperFilter result array filterFunc index:
+    arrayHasIndex = hasIndex array index;
+    value = at array index;
+    passes = filterFunc value;
+    passes = ifElse (is passes #boolean) passes false;
+    shouldBeAdded = and arrayHasIndex passes;
+    result = ifElse shouldBeAdded (append result value) result;
+    resultDelegate = ifElse arrayHasIndex (stdHelperFilter result array filterFunc) (returnResult result);
+    = resultDelegate (increment index);
+
+* Applies filter function to all array values and returns an array of values that fit the filter.
+filter array filterFunc:
+    = stdHelperFilter empty array filterFunc 0;
+
 * Returns an array with the given value at the specified existing index.
 set array index value:
     start = slice array 0 index;
