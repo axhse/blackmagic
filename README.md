@@ -13,10 +13,10 @@ If the working directory is properly configured, then the **std** and factorial 
 Otherwise, you should manually adjust source file paths on the ***Program.fs*** file.
 
 You may also use ***Program.fs*** to run other **BlackMagic** functions.  
-In general, it is important to do 3 things to run a desired **BlackMagic** code:
-1. Load source code text from files or manually write the text (`stdText`, `programText`).
-2. Specify the name of the function to be executed (`functionName`).
-3. List all args to be passed to this function (`functionArgs`) - only args of the **BlackMagic**'s type `Value` are allowed here.
+In general, there are **3** steps to run any desired **BlackMagic** code with ***Program.fs***:
+1. Load source code text from files or specify it manually (like it's done with `stdText` and `programText`).
+2. Specify the name of the function to be executed (like `functionName`).
+3. List all args to be passed to this function (like `functionArgs`) - only args of the **BlackMagic**'s type `Value` are supported here.
  
 ### Features
 - [x] The language has variables that may be declared inside the body of any function. However, no keyword is used for specifying any declaration, even a function declaration, though some special symbols are used for this.
@@ -42,7 +42,7 @@ Single quotes are used for specifying string literal start and end.  Doubled sin
 
 #### Contribution To Society
 **BlackMagic** enforces some good code style practices:
-1. Do not use tabulation - **'\t'** is just not supported by **BlackMagic**.
+1. Do not use tabulation - **BlackMagic** just don't treat **'\t'** like a valid special symbol.
 2. Prefer fascinating **camelCase** to ugly *snake_case* - **'_'** is not allowed too. According to the latest medical researches, *camel_case* is probably the main cause of eye problems among all software developers.
 
 ### Interpreter
