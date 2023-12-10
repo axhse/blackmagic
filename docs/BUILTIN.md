@@ -58,8 +58,8 @@
 - Returns the product of two integer values.
   - `multiply [#integer]first [#integer]second) -> #integer`
 
-- Returns the floor division of two integers.
-  - `floorDivide [#integer]divisible [#integer]divisor) -> #integer`
+- Returns the x of equation: divisible = x * divisor + b, where 0 <= |b| < |divisor| and 0 <= b * divisor.
+  - `divideWithRemainder [#integer]divisible [#integer]divisor) -> #integer`
 
 - Returns true if the first value is less than the second value, otherwise false.
   - `less [#integer]first [#integer]second -> #boolean`

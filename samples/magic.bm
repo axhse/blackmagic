@@ -7,8 +7,9 @@ materializeMagic:
     array = append array 'functional superiority ''23';      * A string.
     array = append array #integer;                           * A type.
     array = append array (append (append empty 123) empty);  * An array.
-    array = append array (floorDivide 1 0);                  * An error.
+    array = append array (divideWithRemainder 1 0);          * An error.
+    array = append array (divideWithRemainder 17 -10);       * An integer.
     array = append array plus;           * A function.
     array = append array (plus 100);     * A partially applied function.
-    array = append array (plus 100 22);  * A fully applied function.
+    array = append array (plus 100 22);  * A fully applied function - an integer.
     = array;

@@ -12,7 +12,7 @@ let BuildInFunctionNames =
       "and"
       "plus"
       "multiply"
-      "floorDivide"
+      "divideWithRemainder"
       "less"
       "at"
       "length"
@@ -34,7 +34,7 @@ let rec getBuiltInFunctionParamCount name =
     | "and" -> 2
     | "plus" -> 2
     | "multiply" -> 2
-    | "floorDivide" -> 2
+    | "divideWithRemainder" -> 2
     | "less" -> 2
     | "at" -> 2
     | "length" -> 1

@@ -47,11 +47,15 @@ let rec equals (first: Value) (second: Value) =
     | Value.Boolean firstValue, Value.Boolean secondValue -> firstValue = secondValue
     | Value.Integer firstValue, Value.Integer secondValue -> firstValue = secondValue
     | Value.String firstValue, Value.String secondValue -> firstValue = secondValue
-    | Value.Error firstValue, Value.Error secondValue ->
-        firstValue.Type = secondValue.Type && firstValue.Message = secondValue.Message
     | Value.Array firstValue, Value.Array secondValue ->
         List.length firstValue = List.length secondValue
         && arrayEquals firstValue secondValue
+    | Value.Error firstValue, Value.Error secondValue ->
+        firstValue.Type = secondValue.Type && firstValue.Message = secondValue.Message
+    | Value.Function firstValue, Value.Function secondValue ->
+        firstValue.Name = secondValue.Name
+        && firstValue.ParamCount = secondValue.ParamCount
+        && arrayEquals firstValue.Args secondValue.Args
     | _ -> false
 
 and arrayEquals firstRest secondRest =
@@ -99,13 +103,19 @@ let _multiply (first: Value) (second: Value) =
     | Value.Integer firstValue, Value.Integer secondValue -> Value.Integer(firstValue * secondValue)
     | _ -> typeError "multiply: Both arguments must be integer values."
 
-let _floorDivide (divisible: Value) (divisor: Value) =
+let _divideWithRemainder (divisible: Value) (divisor: Value) =
     match divisible, divisor with
     | Value.Integer firstValue, Value.Integer secondValue ->
         if secondValue = 0 then
             createError (string ErrorType.Math) "floorDivide: Division by zero is not allowed."
         else
-            Value.Integer(firstValue / secondValue)
+            let result =
+                if (firstValue % secondValue) * secondValue < 0 then
+                    firstValue / secondValue - int64 1
+                else
+                    firstValue / secondValue
+
+            Value.Integer(result)
     | _ -> typeError "floorDivide: Both arguments must be integer values."
 
 let _less (first: Value) (second: Value) =
@@ -185,7 +195,7 @@ let invokeBuiltIn (name: string) (args: Value list) =
     | "and", first :: second :: [] -> _and first second
     | "plus", first :: second :: [] -> _plus first second
     | "multiply", first :: second :: [] -> _multiply first second
-    | "floorDivide", divisible :: divisor :: [] -> _floorDivide divisible divisor
+    | "divideWithRemainder", divisible :: divisor :: [] -> _divideWithRemainder divisible divisor
     | "less", first :: second :: [] -> _less first second
     | "at", sequence :: index :: [] -> _at sequence index
     | "length", sequence :: [] -> _length sequence
