@@ -61,9 +61,21 @@ notLess first second:
 notMore first second:
     = not (more first second);
 
+* Returns smallest of the two numbers.
+min first second:
+    = ifElse (less first second) first second;
+
+* Returns largest of the two numbers.
+max first second:
+    = ifElse (more first second) first second;
+
 * Returns the negation of the number.
 negate value:
     = multiply value -1;
+
+* Returns the absolute value of an integer.
+abs value:
+    = max value (negate value);
 
 * Returns the difference of two numbers.
 minus first second:
@@ -76,6 +88,10 @@ increment value:
 * Returns a decremented number.
 decrement value:
     = minus value 1;
+
+* Returns the b of equation: divisible = x * divisor + b, where 0 <= |b| < |divisor| and 0 <= b * divisor.
+remainder divisible divisor:
+    = minus divisible (multiply divisor (divideWithRemainder divisible divisor));
 
 
 

@@ -105,11 +105,14 @@ Keeps some common functions.
 2. [factorial.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/factorial.bm)
 - `factorial n` - calculates the factorial of n.
 - `testFactorial` - tests if `factorial` works properly.
-3. [magic.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/magic.bm)
+3. [gcd.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/gcd.bm)
+- `gcd first second` - finds the greatest common divisor of two integers.
+- `testGcd` - returns an array of some `gcd` function results.
+4. [magic.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/magic.bm)
 - `materializeMagic` - returns an array containing values of different types.
-4. [partial.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/partial.bm)
+5. [partial.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/partial.bm)
 - `applyAll n` - applies 3 partially applied functions to n and returns the results as an array.
-5. [turingMachine.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/turingMachine.bm)
+6. [turingMachine.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/turingMachine.bm)
 - `runTuringMachine state position memory rules` - runs Turing machine with specified initial state, position, memory, and with giving rules.
 The machine works with following rules:  
 - If head current state is **0** (used as final state) it returns an array with final state of memory.  

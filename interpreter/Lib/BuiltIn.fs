@@ -83,7 +83,7 @@ let isValidName name =
         String.length name <= 100 && areValidSymbols name
 
 let isPureIntegerLiteral chars =
-    List.length chars <= 15
+    1 <= List.length chars && List.length chars <= 15
     && not (List.exists (fun x -> not (String.exists (fun y -> x = y) Numbers)) chars)
 
 let isIntegerLiteral string =

@@ -1,0 +1,27 @@
+* Returns the greatest common divisor of two integers.
+gcd first second:
+    * Make sure agruments are valid.
+    areValidArgs = and (is first #integer) (is second #integer);
+    areValidArgs = and areValidArgs (not (equals first 0));
+    areValidArgs = and areValidArgs (not (equals second 0));
+    maybeError = assert areValidArgs 'Both arguments must be non-zero integers.';
+    * Find the result;
+    first = abs first;
+    second = abs second;
+    a = min first second;
+    b = max first second;
+    d = remainder b a;
+    resultDelegate = ifElse (equals d 0) (returnResult a) (gcd a);
+    resultDelegate = ifElse areValidArgs resultDelegate (returnResult maybeError);
+    = resultDelegate d;
+
+* Tests gcd function.
+testGcd:
+    result = empty;
+    result = append result (gcd 1 1);
+    result = append result (gcd 10 20);
+    result = append result (gcd 42 60);
+    result = append result (gcd 60 42);
+    result = append result (gcd 1 0);
+    result = append result (gcd 1 true);
+    = result;

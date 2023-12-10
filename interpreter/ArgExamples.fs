@@ -5,6 +5,9 @@ open Spec
 // Args for `factorial` function of factorial.bm.
 let args_factorial = [ Value.Integer 10 ]
 
+// Args for `gcd` function of gcd.bm.
+let args_gcd = [ Value.Integer 60; Value.Integer 42 ]
+
 // Args for `applyAll` function of partial.bm.
 let args_applyAll = [ Value.Integer 88 ]
 
