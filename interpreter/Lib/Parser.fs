@@ -36,13 +36,21 @@ let parseTokens text =
         // A string literal start.
         | ('\'') :: rest when isNotText && lastWord = "" -> parse tokens rest "\'" false true
         | ('\'') :: rest when isNotText ->
-            parse (tokens @ [ StringLiteral "\'"; Token.SyntaxError NotSeparatedStringLiteral ]) rest "" false false
+            parse
+                (tokens
+                 @ [ Word lastWord
+                     StringLiteral "\'"
+                     Token.SyntaxError NotSeparatedStringLiteral ])
+                rest
+                ""
+                false
+                false
         // A string literal end.
         | ('\'') :: next :: rest when isStrLiteral && not (isSpecialSymbol next || isSpacing next) ->
             parse
                 (tokens
                  @ [ StringLiteral(lastWord + "\'"); Token.SyntaxError NotSeparatedStringLiteral ])
-                rest
+                (next :: rest)
                 ""
                 false
                 false
