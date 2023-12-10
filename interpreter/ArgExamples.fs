@@ -11,6 +11,9 @@ let args_gcd = [ Value.Integer 60; Value.Integer 42 ]
 // Args for `applyAll` function of partial.bm.
 let args_applyAll = [ Value.Integer 88 ]
 
+// Args for `sum3` function of sum3.bm.
+let args_sum3 = [ Value.Integer 100; Value.Integer 20; Value.Integer 3; ]
+
 // Args for `merge` function of std.bm.
 let args_merge =
     [ Value.Array [ Value.Integer 1; Value.Integer 2 ]

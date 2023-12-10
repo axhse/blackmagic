@@ -23,7 +23,7 @@ In general, there are **3** steps to run any desired **BlackMagic** code with **
 - [x] The language supports recursion.
 - [ ] Lazy evaluation is not supported.
 - [x] Functions are supported.
-- [ ] Closures are not supported.
+- [ ] Closures are not supported (actually, they are not really necessary, as currying is supported).
 - [ ] IO is not supported (but may be easily added to the **built-in** function set if it will be necessary) - right now F# tools are used to load input data and print the result.
 - [x] Arrays are supported (may store any values at the same time) with the minimal set of functions that are enough to implement other common sequence functions.
 - [x] Some strong need functions for integers, arrays, strings, and others are implemented by F# natively. There are also some useful functions implemented in **std**, including advanced array functions `merge`, `slice`, `map` and `filter`.
@@ -113,7 +113,12 @@ Keeps some common functions.
 - `materializeMagic` - returns an array containing values of different types.
 5. [partial.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/partial.bm)
 - `applyAll n` - applies 3 partially applied functions to n and returns the results as an array.
-6. [turingMachine.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/turingMachine.bm)
+The sample shows that currying is possible in *BlackMagic*.
+6. [sum3.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/sum3.bm)
+- `sum3 first second` - calculates the sum of 3 integers.
+- `testSum3` - returns some result of `sum3` function.
+The sample shows that it's possible to make 2-argument function composition behave like a 3-agrument function.
+7. [turingMachine.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/turingMachine.bm)
 - `runTuringMachine state position memory rules` - runs Turing machine with specified initial state, position, memory, and with giving rules.
 The machine works with following rules:  
 - If head current state is **0** (used as final state) it returns an array with final state of memory.  

@@ -1,0 +1,5 @@
+sum3 first second:
+    = plus (plus first second);
+
+testSum3:
+    = sum3 100 20 3;
