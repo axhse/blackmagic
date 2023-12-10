@@ -5,18 +5,20 @@ It may be interpreted with the developed F# interpreter.
 The results of parsing and execution print to the console.  
 **BlackMagic** is an extremely pure language, besides, it has no even IO functions, as they have side-effects (though they may be easily implemented via some simple F# functions).  
 Thus, the result of code execution is handled directly by the interpreter.  
-**BlackMagic** may not exist actually beside F# infrastructure, but at the same time, it may be quite easily integrated into other F# code.  
+**BlackMagic** may not actually be used beside F# infrastructure, but at the same time, it may be quite easily integrated into other F# code.  
 
 ### Quick Start
-Clone the project and open ***/interpreter*** folder as F# project (VS is recommended).  
-If the working directory is properly configured, then the **std** and factorial program sources will be read by relative paths from their files and then interpreted. You will see the result and the colored syntax on the console output.  
-Otherwise, you should manually adjust source file paths on the ***Program.fs*** file.
+Clone the project, open ***/interpreter*** folder as F# project (VisualStudio is recommended) and run ***Program.fs***.  
+If the working directory is properly configured by the system, then the **std** and factorial program code will be read from their files and then interpreted. And you will see the program result and the colored syntax on the console output.  
+The source folder is expected to be ***../../../../samples***.  
+If you get an IO error, you should manually fix the source folder path (modify `sampleFolderPath`).
 
-You may also use ***Program.fs*** to run other **BlackMagic** functions.  
-In general, there are **3** steps to run any desired **BlackMagic** code with ***Program.fs***:
-1. Load source code text from files or specify it manually (like it's done with `stdText` and `programText`).
+You may use ***Program.fs*** to run any other **BlackMagic** program.  
+In general, there are **3** steps to execute any desired **BlackMagic** code with ***Program.fs***:
+1. Load source code text from files or write it manually (like it's done with `stdText` and `programText`).
 2. Specify the name of the function to be executed (like `functionName`).
 3. List all args to be passed to this function (like `functionArgs`) - only args of the **BlackMagic**'s type `Value` are supported here.
+4. Run the interpreter (like `runWithStd`).
  
 ### Features
 - [x] The language has variables that may be declared inside the body of any function. However, no keyword is used for specifying any declaration, even a function declaration, though some special symbols are used for this.
@@ -24,7 +26,7 @@ In general, there are **3** steps to run any desired **BlackMagic** code with **
 - [ ] Lazy evaluation is not supported.
 - [x] Functions are supported.
 - [ ] Closures are not supported (actually, they are not really necessary, as currying is supported).
-- [ ] IO is not supported (but may be easily added to the **built-in** function set if it will be necessary) - right now F# tools are used to load input data and print the result.
+- [ ] IO is not supported (but may be easily added to the **built-in** function set if it will be necessary) - right now F# tools are used to load input data and print execution results.
 - [x] Arrays are supported (may store any values at the same time) with the minimal set of functions that are enough to implement other common sequence functions.
 - [x] Some strong need functions for integers, arrays, strings, and others are implemented by F# natively. There are also some useful functions implemented in **std**, including advanced array functions `merge`, `slice`, `map` and `filter`.
 
@@ -57,7 +59,7 @@ Additionally, the user should specify which function to run and with what argume
 - Invocation depth limit: The depth of the function invocation stack is too high to be safely processed.
 - Unknown function: We try to execute an unknown function.
 
-All these steps (except the first one) are implemented based on recursive functions with `match ... with` operator.  
+All these steps (except the first one) are implemented with recursive functions based on `match ... with` operator.  
 
 Exceptions are not supported. Instead, special type `error` is used.  
 These errors do not propagate natively, and after their appearing they became processed by rest code.  
@@ -67,7 +69,7 @@ Some basic **built-in** functions are implemented directly by F#. The set of the
 The language has its own typing system, although it may be quite easily converted back and forth to the F# type system.  
 
 **std.bm** is just a common source file that is not printed by the interpreter.  
-Though, it's ok to merge the text of multiple source files to parse it all together.  
+Though, it's ok to merge texts of multiple source files to parse it all together.  
 
 Although the language strongly relies on recursive calculations, it really struggles from inefficient memory usage.  
 (While F# probably optimizes recursion a lot).  
@@ -113,7 +115,7 @@ Keeps some common functions.
 - `materializeMagic` - returns an array containing values of different types.
 5. [partial.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/partial.bm)
 - `applyAll n` - applies 3 partially applied functions to n and returns the results as an array.
-The sample shows that currying is possible in *BlackMagic*.
+The sample shows that currying is possible in **BlackMagic**.
 6. [sum3.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/sum3.bm)
 - `sum3 first second` - calculates the sum of 3 integers.
 - `testSum3` - returns some result of `sum3` function.
