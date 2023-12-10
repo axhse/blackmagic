@@ -134,7 +134,7 @@ and createFunction name invocationDepth code =
     else
         evaluateFunction func code invocationDepth
 
-let executeDeclaredFunction code (declaration: Declaration) args =
+let executeFunctionWithArgs name args code =
     let rec applyAllArgs value restArgs code =
         match restArgs with
         | [] -> Value value
@@ -145,33 +145,17 @@ let executeDeclaredFunction code (declaration: Declaration) args =
             | RuntimeError message -> RuntimeError message
             | Value value -> applyAllArgs value rest code
 
-    let mainFunc = createFunction declaration.Name 0 code
+    let mainFunc = createFunction name 0 code
 
     match mainFunc with
     | RuntimeError message -> RuntimeError message
     | Value value -> applyAllArgs value args code
 
 let execute (code: Declaration list) (functionName: string) (args: Value list) : ExecutionResult =
-    let argCount = List.length args
-
-    match functionName with
-    | _ when isBuiltInFunction functionName ->
-        let paramCount = getBuiltInFunctionParamCount functionName
-
-        if paramCount < argCount then
-            RuntimeError(
-                sprintf "Function `%s` has only %d parameters. Got %d arguments." functionName paramCount argCount
-            )
-        else
-            Value(invokeBuiltIn functionName args)
-    | _ when List.exists (fun (decl: Declaration) -> decl.Name = functionName) code ->
-        let declaration = findDeclaration functionName code
-        let paramCount = List.length declaration.ParamNames
-
-        if paramCount < argCount then
-            RuntimeError(
-                sprintf "Function `%s` has only %d parameters. Got %d arguments." functionName paramCount argCount
-            )
-        else
-            executeDeclaredFunction code declaration args
-    | _ -> RuntimeError(sprintf "Unknown function `%s`." functionName)
+    if
+        isBuiltInFunction functionName
+        || List.exists (fun (decl: Declaration) -> decl.Name = functionName) code
+    then
+        executeFunctionWithArgs functionName args code
+    else
+        RuntimeError(sprintf "Unknown function `%s`." functionName)

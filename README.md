@@ -55,7 +55,7 @@ Additionally, the user should specify which function to run and with what argume
 5. Finally, the compiled code is executed. There are some runtime errors that may occur:
 - Impossible application: There is a logic error with function application, so at some point, we get a singular value that cannot be applied further.
 - Invocation depth limit: The depth of the function invocation stack is too high to be safely processed.
-- Start error: We try to execute an unknown function or pass too many arguments.
+- Unknown function: We try to execute an unknown function.
 
 All these steps (except the first one) are implemented based on recursive functions with `match ... with` operator.  
 
