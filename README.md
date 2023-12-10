@@ -78,6 +78,7 @@ Thus, large calculations can not be performed with **BlackMagic** yet.
 #### Some Tricky Errors
 ##### Parsing
 1. If you forget to end an expression with **`;`** (or double this symbol for some reason), the parser will consider the following code as a new statement and thus may fail. - Make sure the last expression has an end symbol.
+2. If your code text contains some strange symbols, like tabulation or carriage return, you will get an invalid name compilation error at the place of their first occurrence.
 ##### Runtime
 1. If your code is logically incorrect (like `plus 1 2 3`, for example), the interpreter may fail on runtime with a related error. - Make sure you apply the functions properly.
 2. In addition, some function may produce an error and then this error will be passed to the next functions, what will probably lead to creating a brand-new error. - Make sure your code has no source of unexpected errors.
