@@ -33,9 +33,9 @@ let toRegularString (value: Value) =
         let placeholderCount = func.ParamCount - List.length args
 
         let argNames =
-            (List.map anyToString args) @ (Seq.toList (Array.create placeholderCount "."))
+            (List.map anyToString args) @ (Seq.toList (Array.create placeholderCount "?"))
 
-        let paramString = "(" + String.concat ", " argNames + ")"
+        let paramString = "(" + String.concat ";" argNames + ")"
         $"<function>{func.Name}{paramString}"
 
     (anyToString value)
