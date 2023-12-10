@@ -1,6 +1,3 @@
-* Returns 1.
-getOne x: = 1;
-
 * Returns the factorial of a number.
 factorial n:
     * Change n to 1 if it's 0.
@@ -9,10 +6,13 @@ factorial n:
     isValid = ifElse (is n #integer) (notLess n 0) false;
     * Assert n is a valid value.
     maybeError = assert isValid 'Factorial can be calculated only for non-negative integers.';
+    * Return 1 if n = 1, else calculate recursively.
+    delegate = ifElse (equals n 1) (returnResult 1) factorial;
     * Replace factorial function to a void function on error to prevent recursion.
-    delegate = ifElse isValid factorial doNothing;
+    delegate = ifElse isValid delegate doNothing;
     * Calculate and return the result.
-    = ifNoError maybeError (multiply n (ifElse (equals n 1) getOne delegate (decrement n)));
+    currentResult = delegate (decrement n);
+    = ifNoError maybeError (multiply n currentResult);
 
 * Test.
 testFactorial:

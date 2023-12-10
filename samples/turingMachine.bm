@@ -34,6 +34,7 @@ runTuringMachine state position memory rules:
     noRuleErrorMessage = join noRuleErrorMessage (toString currentValue);
     noRuleErrorMessage = join noRuleErrorMessage ' at memory postion=';
     noRuleErrorMessage = join noRuleErrorMessage (toString position);
+    noRuleErrorMessage = join noRuleErrorMessage '.';
     noRuleError = createError 'logic' noRuleErrorMessage;
     hasRule = or isFinalState (not (is rule #nothing));
     resultDelegate = ifElse hasRule resultDelegate (returnResult noRuleError);

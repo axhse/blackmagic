@@ -48,7 +48,7 @@ let args_filter =
             Args = [ Value.Integer 0 ]
             ParamCount = 2 } ]
 
-// Args for `set` function of std.bm.
+// Args for `runTuringMachine` function of turingMachine.bm.
 let args_runTuringMachine =
     [ Value.Integer 2
       Value.Integer 0

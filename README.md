@@ -104,7 +104,7 @@ Thus, large calculations can not be performed with **BlackMagic** yet.
 Keeps some common functions.
 2. [factorial.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/factorial.bm)
 - `factorial n` - calculates the factorial of n.
-- `testFactorial` - tests if `factorial` works properly.
+- `testFactorial` - returns an array of some `factorial` function results if it works properly, otherwise an assertion error.
 3. [gcd.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/gcd.bm)
 - `gcd first second` - finds the greatest common divisor of two integers.
 - `testGcd` - returns an array of some `gcd` function results.

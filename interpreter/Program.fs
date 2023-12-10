@@ -14,6 +14,8 @@ let programText = (readFolderFileText sampleFolderPath "factorial.bm")
 // The name of the function to be invoked.
 let functionName = "factorial"
 // The args of the function to be invoked.
-let functionArgs = [ Value.Integer 10 ]
+let functionArgs = args_factorial
+// You may also specify the args manually like this:
+// let functionArgs = [ Value.Integer 10 ]
 
 runWithStd programText stdText functionName functionArgs
