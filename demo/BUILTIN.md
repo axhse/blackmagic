@@ -1,4 +1,4 @@
-#### Special symbols
+### Special symbols
 
 | Symbol  | Specifies                              |
 |---------|----------------------------------------|
@@ -13,7 +13,7 @@
 | `' '`   | Whitespace.                            |
 | `'\n'`  | New line.                              |
 
-## Types
+### Types
 
 | Type        | Represents                                     |
 |-------------|------------------------------------------------|
@@ -27,12 +27,12 @@
 | `#error`    | Error with a string type and string message.   |
 
 
-#### Functions
+### Functions
 
 ##### Logic
 
-- Returns the value if the condition is true, otherwise nothing.
-  - `if [#boolean]condition value`
+- Returns onTrue if the condition is true, otherwise onFalse.
+  - `ifElse [#boolean]condition onTrue onFalse`
 
 ##### Typing
 
@@ -102,7 +102,7 @@
 - Retrieves the message of the error.
   - `getErrorMessage [#error]error -> #string`
 
-####  Literal examples
+###  Literal examples
 
 #type
 ```
