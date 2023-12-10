@@ -5,7 +5,7 @@ It may be interpreted with the developed F# interpreter.
 The results of parsing and execution print to the console.  
 **BlackMagic** is an extremely pure language, besides, it has no even IO functions, as they have side-effects (though they may be easily implemented via some simple F# functions).  
 Thus, the result of code execution is handled directly by the interpreter.  
-**BlackMagic** may not actually be used beside F# infrastructure, but at the same time, it may be quite easily integrated into other F# code.  
+**BlackMagic** may not actually be used beside F# infrastructure, but at the same time, it may be quite easily integrated into F# programs.  
 
 ### Quick Start
 Clone the project, open ***/interpreter*** folder as F# project (VisualStudio is recommended) and run ***Program.fs***.  
@@ -14,7 +14,7 @@ The source folder is expected to be ***../../../../samples***.
 If you get an IO error, you should manually fix the source folder path (modify `sampleFolderPath`).
 
 You may use ***Program.fs*** to run any other **BlackMagic** program.  
-In general, there are **3** steps to execute any desired **BlackMagic** code with ***Program.fs***:
+In general, there are **4** steps to execute any desired **BlackMagic** code with ***Program.fs***:
 1. Load source code text from files or write it manually (like it's done with `stdText` and `programText`).
 2. Specify the name of the function to be executed (like `functionName`).
 3. List all args to be passed to this function (like `functionArgs`) - only args of the **BlackMagic**'s type `Value` are supported here.
@@ -44,14 +44,14 @@ Single quotes are used for specifying string literal start and end.  Doubled sin
 
 #### Contribution To Society
 **BlackMagic** enforces some good code style practices:
-1. Do not use tabulation - **BlackMagic** just don't treat **'\t'** like a valid special symbol.
-2. Prefer fascinating **camelCase** to ugly *snake_case* - **'_'** is not allowed too. According to the latest medical researches, *camel_case* is probably the main cause of eye problems among all software developers.
+1. Do not use tabulation — **BlackMagic** just don't treat **'\t'** like a valid special symbol.
+2. Prefer fascinating **camelCase** to ugly *snake_case* — **'_'** is not allowed too. According to the latest medical researches, *camel_case* is probably the main cause of eye problems among all software developers.
 
 ### Interpreter
 There are several steps from accepting text code to executing the program:
 1. The interpreter accepts raw text code (that may be specified manually or loaded from any file).  
 Additionally, the user should specify which function to run and with what arguments.  
-2. Initially, the parser splits the text into tokens—special symbols, words, and others.  
+2. Initially, the parser splits the text into tokens — special symbols, words, and others.  
 3. Then, tokens are parsed into syntax, maintaining the text structure but with much more information about text elements.  
 4. Following this, syntax is compiled into expressions and the original file structure now lost here, but now it's much easier for us to understand how to execute the code.  
 5. Finally, the compiled code is executed. There are some runtime errors that may occur:
@@ -79,49 +79,49 @@ Thus, large calculations can not be performed with **BlackMagic** yet.
 
 #### Some Tricky Errors
 ##### Parsing
-1. If you forget to end an expression with **`;`** (or double this symbol for some reason), the parser will consider the following code as a new statement and thus may fail. - Make sure the last expression has an end symbol.
+1. If you forget to end an expression with **`;`** (or double this symbol for some reason), the parser will consider the following code as a new statement and thus may fail. Make sure the last compiled expression has an end symbol.
 2. If your code text contains some strange symbols, like tabulation or carriage return, you will get an invalid name compilation error at the place of their first occurrence.
 ##### Runtime
-1. If your code is logically incorrect (like `plus 1 2 3`, for example), the interpreter may fail on runtime with a related error. - Make sure you apply the functions properly.
-2. In addition, some function may produce an error and then this error will be passed to the next functions, what will probably lead to creating a brand-new error. - Make sure your code has no source of unexpected errors.
+1. If your code is logically incorrect (like `plus 1 2 3`, for example), the interpreter may fail on runtime with a related error. Make sure you apply the functions properly.
+2. In addition, some function may produce an error and then this error will be passed to the next functions, what will probably lead to creating a brand-new error. Make sure your code has no source of unexpected errors.
 ##### Conceptual
 1. As **BlackMagic** has no conditional statements and no lazy evaluation, `ifElse` of **std** always evaluates all its arguments. Thus, to achieve desired conditional behavior and prevent infinite recursion particularly, it's necessary to pass functions as `onTrue` and `onFalse` arguments, get a result function and then apply it. For this purpose, you may use `returnResult` of **std** that returns the specified result when is applied to any argument.
 
 #### Components
 - Main
-1. [FileReader.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/FileReader.fs) - keeps functions to read code text from files.
-2. [ArgExamples.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/ArgExamples.fs) - keeps some arg examples for **BlackMagic** functions.
-3. [Program.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Program.fs) - the main file to be run.  
+1. [FileReader.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/FileReader.fs) — keeps functions to read code text from files.
+2. [ArgExamples.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/ArgExamples.fs) — keeps some arg examples for **BlackMagic** functions.
+3. [Program.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Program.fs) — the main file to be run.  
 - Lib  
-4. [Lib/Spec.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/Spec.fs) - specifies key language-related types.
-5. [Lib/SpecTools.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/SpecTools.fs) -implements some tools over `Spec` types.
-6. [Lib/BuiltIn.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/BuiltIn.fs) - describes built-in features.
-7. [Lib/BuiltInFunctions.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/BuiltInFunctions.fs) - implements built-in functions.
-8. [Lib/Parser.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/Parser.fs) - implements token and syntax parser.
-9. [Lib/Compiler.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/Compiler.fs) - implements code compiler.
-10. [Lib/Executor.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/Executor.fs) - implements code executor.
-11. [Lib/Interpreter.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/Interpreter.fs) - implements console interpreter.
+4. [Lib/Spec.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/Spec.fs) — specifies key language-related types.
+5. [Lib/SpecTools.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/SpecTools.fs) — implements some tools over `Spec` types.
+6. [Lib/BuiltIn.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/BuiltIn.fs) — describes built-in features.
+7. [Lib/BuiltInFunctions.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/BuiltInFunctions.fs) — implements built-in functions.
+8. [Lib/Parser.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/Parser.fs) — implements token and syntax parser.
+9. [Lib/Compiler.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/Compiler.fs) — implements code compiler.
+10. [Lib/Executor.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/Executor.fs) — implements code executor.
+11. [Lib/Interpreter.fs](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/interpreter/Lib/Interpreter.fs) — implements console interpreter.
 
 ### Samples
 1. [std.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/std.bm)  
 Keeps some common functions.
 2. [factorial.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/factorial.bm)
-- `factorial n` - calculates the factorial of n.
-- `testFactorial` - returns an array of some `factorial` function results if it works properly, otherwise an assertion error.
+- `factorial n` — calculates the factorial of n.
+- `testFactorial` — returns an array of some `factorial` function results if it works properly, otherwise an assertion error.
 3. [gcd.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/gcd.bm)
-- `gcd first second` - finds the greatest common divisor of two integers.
-- `testGcd` - returns an array of some `gcd` function results.
+- `gcd first second` — finds the greatest common divisor of two integers.
+- `testGcd` — returns an array of some `gcd` function results.
 4. [magic.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/magic.bm)
-- `materializeMagic` - returns an array containing values of different types.
+- `materializeMagic` — returns an array containing values of different types.
 5. [partial.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/partial.bm)
-- `applyAll n` - applies 3 partially applied functions to n and returns the results as an array.
+- `applyAll n` — applies 3 partially applied functions to n and returns the results as an array.  
 The sample shows that currying is possible in **BlackMagic**.
 6. [sum3.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/sum3.bm)
-- `sum3 first second` - calculates the sum of 3 integers.
-- `testSum3` - returns some result of `sum3` function.
+- `sum3 first second` — calculates the sum of 3 integers.
+- `testSum3` — returns some result of `sum3` function.  
 The sample shows that it's possible to make 2-argument function composition behave like a 3-agrument function.
 7. [turingMachine.bm](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/samples/turingMachine.bm)
-- `runTuringMachine state position memory rules` - runs Turing machine with specified initial state, position, memory, and with giving rules.
+- `runTuringMachine state position memory rules` — runs Turing machine with specified initial state, position, memory, and with giving rules.
 The machine works with following rules:  
 - If head current state is **0** (used as final state) it returns an array with final state of memory.  
 - Else, it tries to find a rule related with current state and value at position.  
