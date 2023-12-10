@@ -25,6 +25,12 @@ let args_slice =
       Value.Integer 1
       Value.Integer 3 ]
 
+// Args for `set` function of std.bm.
+let args_set =
+    [ Value.Array [ Value.Integer 0; Value.Integer 1; Value.Integer 2; Value.Integer 3 ]
+      Value.Integer 2
+      Value.Integer 99 ]
+
 // Args for `map` function of std.bm.
 let args_map =
     [ Value.Array

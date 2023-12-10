@@ -73,7 +73,7 @@ Although the language strongly relies on recursive calculations, it really strug
 (While F# probably optimizes recursion a lot).  
 Thus, large calculations can not be performed with **BlackMagic** yet.  
 
-**built-in** functions are described in [BUILTIN.md](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/BUILTIN.md).  
+**built-in** functions are described in [BUILTIN.md](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/demo/BUILTIN.md).  
 
 #### Some Tricky Errors
 ##### Parsing
@@ -133,7 +133,8 @@ The machine works with following rules:
 `args_runTuringMachine` of ***ArgExamples.fs*** describes a simple program for Turing machine that swaps **99** to **1000** right from the start until it meets **'#'** twice or `nothing` once.
 
 ### Demo
-![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/success.png)
-![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/compilation%20error.png)
-![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/runtime%20error.png)
-![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/docs/Turing%20machine.png)
+![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/demo/success-images/factorial.png)
+![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/demo/success-images/testGcd.png)
+![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/demo/success-images/runTuringMachine.png)
+![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/demo/failure-images/compilation.png)
+![](https://github.com/MAILabs-Edu-2023/fp-compiler-lab-axhse/blob/main/demo/failure-images/runtime.png)
