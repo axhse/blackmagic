@@ -281,7 +281,7 @@ let parseSyntax tokens stdFunctionNames =
                 expressionResult
                 @ withError (SpecialSymbol ';') SyntaxError.MissingParenthesis rest,
                 []
-            | _ -> failwith "Unexpected content ending."
+            | _ -> failwith "Parser: Unexpected content ending."
 
     parseNextDeclaration [] tokens (BuildInFunctionNames @ stdFunctionNames)
 

@@ -9,9 +9,9 @@ let dropMeaninglessLexemes syntax =
         | [] -> result
         | (Lexeme.Spacing _) :: rest -> drop result rest
         | (Lexeme.Comment _) :: rest -> drop result rest
-        | (Lexeme.InvalidName _) :: _ -> failwith "Unexpected lexeme."
-        | (Lexeme.SyntaxError _) :: _ -> failwith "Unexpected lexeme."
-        | (Lexeme.UnparsedCode _) :: _ -> failwith "Unexpected lexeme."
+        | (Lexeme.InvalidName _) :: _ -> failwith "Compiler: Unexpected lexeme."
+        | (Lexeme.SyntaxError _) :: _ -> failwith "Compiler: Unexpected lexeme."
+        | (Lexeme.UnparsedCode _) :: _ -> failwith "Compiler: Unexpected lexeme."
         | current :: rest -> drop (result @ [ current ]) rest
 
     drop [] syntax
@@ -30,7 +30,7 @@ let compile syntax =
             | _ :: [] -> result
             | _ :: second :: rest when result = "" -> dropQuotes (string second) rest
             | current :: rest -> dropQuotes (result + string current) rest
-            | [] -> failwith "Unexpected state."
+            | [] -> failwith "Compiler: Unexpected state."
 
         dropQuotes "" (Seq.toList literalValue)
 
@@ -58,13 +58,13 @@ let compile syntax =
                   KnownFunctions = knownFunctions }
 
             compileNextDeclaration (result @ [ declaration ]) restBodyTokens knownFunctions
-        | _ -> failwith "Unexpected lexeme."
+        | _ -> failwith "Compiler: Unexpected lexeme."
 
     and compileDeclarationTitle paramNames restSyntax =
         match restSyntax with
         | (Lexeme.SpecialSymbol ':') :: rest -> paramNames, rest
         | (Lexeme.FunctionParam name) :: rest -> compileDeclarationTitle (paramNames @ [ name ]) rest
-        | _ -> failwith "Unexpected lexeme."
+        | _ -> failwith "Compiler: Unexpected lexeme."
 
     and compileBody result restSyntax =
         match restSyntax with
@@ -76,12 +76,12 @@ let compile syntax =
             let expression, expressionRest = compileAssignmentStart rest
             let assignment = Assignment { Name = name; Value = expression }
             compileBody (result @ [ assignment ]) expressionRest
-        | _ -> failwith "Unexpected lexeme."
+        | _ -> failwith "Compiler: Unexpected lexeme."
 
     and compileAssignmentStart restSyntax =
         match restSyntax with
         | (Lexeme.SpecialSymbol '=') :: rest -> compileExpressionStart rest
-        | _ -> failwith "Unexpected lexeme."
+        | _ -> failwith "Compiler: Unexpected lexeme."
 
     and compileExpressionStart restSyntax =
         match restSyntax with
@@ -89,7 +89,7 @@ let compile syntax =
         | (Lexeme.Literal _) :: _ -> compileAndProcessItems restSyntax
         | (Lexeme.FunctionAccess _) :: _ -> compileAndProcessItems restSyntax
         | (Lexeme.VariableAccess _) :: _ -> compileAndProcessItems restSyntax
-        | _ -> failwith "Unexpected lexeme."
+        | _ -> failwith "Compiler: Unexpected lexeme."
 
     and compileAndProcessItems restSyntax =
         let items, itemsRest = compileExpressionItems [] restSyntax
@@ -107,13 +107,13 @@ let compile syntax =
             compileExpressionItems (result @ [ LiteralValue(literalToValue literal) ]) rest
         | (Lexeme.FunctionAccess name) :: rest -> compileExpressionItems (result @ [ Access name ]) rest
         | (Lexeme.VariableAccess name) :: rest -> compileExpressionItems (result @ [ Access name ]) rest
-        | _ -> failwith "Unexpected lexeme."
+        | _ -> failwith "Compiler: Unexpected lexeme."
 
     and compileContainerContent restSyntax =
         let (expression: Expression), expressionRest = compileExpressionStart restSyntax
 
         match expressionRest with
         | (Lexeme.SpecialSymbol ')') :: rest -> expression, rest
-        | _ -> failwith "Unexpected lexeme."
+        | _ -> failwith "Compiler: Unexpected lexeme."
 
     compileNextDeclaration [] (dropMeaninglessLexemes syntax) BuildInFunctionNames

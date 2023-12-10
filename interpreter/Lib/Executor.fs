@@ -30,7 +30,7 @@ let rec buildVariables result restNames restArgs =
     match restNames, restArgs with
     | [], [] -> result
     | name :: otherNames, arg :: otherArgs -> buildVariables (updateVariable result name arg) otherNames otherArgs
-    | _ -> failwith "Unexpected situation."
+    | _ -> failwith "Executor: Unexpected situation."
 
 let rec apply (value: Value) arg code invocationDepth =
     match value with
@@ -38,7 +38,7 @@ let rec apply (value: Value) arg code invocationDepth =
         let paramCount = func.ParamCount
 
         if paramCount <= List.length func.Args then
-            failwith "Unexpected application."
+            failwith "Executor: Unexpected situation."
         else
             let func =
                 { Name = func.Name
@@ -79,7 +79,7 @@ and evaluateBody restBody variables invocationDepth code =
         | RuntimeError message -> RuntimeError message
         | Value arg -> evaluateBody rest (updateVariable variables block.Name arg) invocationDepth code
     | (Return block) :: [] -> evaluateExpression block.Value variables invocationDepth code
-    | _ -> failwith "Unexpected situation"
+    | _ -> failwith "Executor: Unexpected situation."
 
 and evaluateExpression expression variables invocationDepth code =
     match expression with
@@ -92,7 +92,7 @@ and evaluateExpression expression variables invocationDepth code =
         match expressionResult with
         | RuntimeError message -> RuntimeError message
         | Value accumulatorValue -> evaluateComposition accumulatorValue other variables invocationDepth code
-    | Composition [] -> failwith "Unexpected situation"
+    | Composition [] -> failwith "Executor: Unexpected situation."
 
 and evaluateAccess variables invocationDepth code name =
     if hasVariable variables name then

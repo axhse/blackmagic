@@ -207,4 +207,4 @@ let invokeBuiltIn (name: string) (args: Value list) =
     | "createError", errorType :: message :: [] -> _createError errorType message
     | "getErrorType", error :: [] -> _getErrorType error
     | "getErrorMessage", error :: [] -> _getErrorMessage error
-    | _ -> failwith "Unexpected invocation."
+    | _ -> failwith "BuiltInFunction: Unexpected invocation."

@@ -46,7 +46,7 @@ let rec getBuiltInFunctionParamCount name =
     | "createError" -> 2
     | "getErrorType" -> 1
     | "getErrorMessage" -> 1
-    | _ -> failwith "Unknown built-in function name."
+    | _ -> failwith "BuiltIn: Unknown built-in function name."
 
 let TypeLiterals =
     [ "#type"
