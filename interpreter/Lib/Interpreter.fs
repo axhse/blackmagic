@@ -53,5 +53,5 @@ let runWithStd (codeText: string) (stdCodeText: string) (targetFunction: string)
             printSyntaxWithErrors userSyntax
 
 
-let run (stdCodeText: string) (targetFunction: string) (args: Value list) =
-    runWithStd stdCodeText "" targetFunction args
+let run (codeText: string) (targetFunction: string) (args: Value list) =
+    runWithStd "" codeText targetFunction args
